@@ -22,6 +22,7 @@ public class User {
     private String email;
     private String nickname;
     private String password;
+    private String aboutMe;
     private String firstName;
     private String lastName;
 
@@ -55,6 +56,22 @@ public class User {
     private List<Bookmark> bookmarks;
 
     public User() {
+    }
+
+    public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.posts = posts;
+        this.securityQuestions = securityQuestions;
+        this.likes = likes;
+        this.following = following;
+        this.followed = followed;
+        this.bookmarks = bookmarks;
     }
 
     public User(int userId, String email, String nickname, String password, String firstName, String lastName, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
@@ -157,6 +174,14 @@ public class User {
         this.securityQuestions = securityQuestions;
     }
 
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
     public List<Like> getLikes() {
         return likes;
     }
@@ -199,7 +224,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, email, nickname, password, firstName, lastName, posts, securityQuestions, likes, following, followed, bookmarks);
+        return Objects.hash(userId, email, nickname,aboutMe, password, firstName, lastName, posts, securityQuestions, likes, following, followed, bookmarks);
     }
 
     @Override
@@ -211,6 +236,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", aboutMe='" + aboutMe + '\'' +
                 '}';
     }
 }
