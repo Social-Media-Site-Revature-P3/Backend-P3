@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.revature.beans.repositories.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.revature.dtos.Comment;
 import org.springframework.stereotype.Service;
 
 import com.revature.models.Post;
@@ -43,6 +43,10 @@ public class PostService {
 		return followedList;
 	}
 
+	public List<Post> readByComments(Integer postId) {
+		return this.postRepository.findCommentsByPost(postId);
+	}
+
 	public List<Post> readAll() {
 		return this.postRepository.findAll();
 	}
@@ -51,7 +55,20 @@ public class PostService {
 		return this.postRepository.save(post);
 	}
 
+	public void createComment(Comment comment) {
+		this.postRepository.saveComment(comment.getCommentId(), comment.getPostId());
+	}
+
+	public void update(Integer postId, String image, String text, String title, Integer userId) {
+		this.postRepository.updatePostById(postId, image, text, title, userId);
+	}
+
 	public void deletePost(Integer postId) {
 		this.postRepository.deleteById(postId);
+	}
+
+	public void deleteComment(Integer postId) {
+		this.postRepository.deleteComment(postId);
+		this.postRepository.deletePost(postId);
 	}
 }

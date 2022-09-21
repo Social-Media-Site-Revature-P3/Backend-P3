@@ -54,7 +54,6 @@ public class UserController {
         return ResponseEntity.ok(this.service.save(user));
     }
 
-
     @DeleteMapping(value = "/{userId}")
     public void deleteUser(@PathVariable(name = "userId") Integer userId) {
         this.service.deleteUser(userId);
