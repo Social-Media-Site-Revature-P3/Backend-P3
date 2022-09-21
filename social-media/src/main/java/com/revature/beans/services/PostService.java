@@ -69,6 +69,6 @@ public class PostService {
 
 	public void deleteComment(Integer postId) {
 		this.postRepository.deleteComment(postId);
-		this.postRepository.deletePost(postId);
+		this.postRepository.deleteById(postId);
 	}
 }

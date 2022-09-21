@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer>{
@@ -19,6 +20,9 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
 
     @Query(value = "SELECT * FROM posts p LEFT JOIN posts_comments pc ON p.post_id = pc.comments_post_id WHERE pc.post_post_id = :postId", nativeQuery = true)
     List<Post> findCommentsByPost(@Param("postId") Integer postId);
+
+    @Query(value = "SELECT * FROM posts p LEFT JOIN posts_comments pc ON p.post_id = pc.comments_post_id WHERE pc.comments_post_id = :postId", nativeQuery = true)
+    Optional<Post> findPostIfComment(@Param("postId") Integer postId);
 
     @Modifying
     @Transactional
@@ -32,7 +36,7 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM posts_comments WHERE post_post_id = :postId OR comments_post_id = :postId", nativeQuery = true)
+    @Query(value = "DELETE FROM posts_comments WHERE comments_post_id = :postId", nativeQuery = true)
     void deleteComment(@Param("postId") Integer postId);
 
     @Transactional

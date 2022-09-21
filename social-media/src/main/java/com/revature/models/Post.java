@@ -30,7 +30,7 @@ public class Post {
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Post> comments;
 
@@ -38,11 +38,11 @@ public class Post {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Like> likes;
 
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Bookmark> bookmarks;
 
