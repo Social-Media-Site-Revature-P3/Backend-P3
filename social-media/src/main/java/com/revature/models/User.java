@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.awt.print.Book;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
+
     private String email;
     private String nickname;
     private String password;
@@ -25,35 +27,37 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Post> posts;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<SecurityQuestion> securityQuestions;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Like> likes;
 
     @OneToMany(mappedBy = "followerUser")
     @JsonIgnore
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Follow>  following;
 
     @OneToMany(mappedBy = "followedUser")
     @JsonIgnore
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Follow> followed;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinTable(name = "bookmarks",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "post_id")})
-    private Set<Post> postBookmarks = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Bookmark> bookmarks;
 
     public User() {
     }
 
-    public User(int userId, String email, String nickname, String password, String firstName, String lastName, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, Set<Post> postBookmarks) {
+    public User(int userId, String email, String nickname, String password, String firstName, String lastName, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
         this.userId = userId;
         this.email = email;
         this.nickname = nickname;
@@ -65,10 +69,10 @@ public class User {
         this.likes = likes;
         this.following = following;
         this.followed = followed;
-        this.postBookmarks = postBookmarks;
+        this.bookmarks = bookmarks;
     }
 
-    public User(String email, String nickname, String password, String firstName, String lastName, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, Set<Post> postBookmarks) {
+    public User(String email, String nickname, String password, String firstName, String lastName, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
@@ -79,10 +83,10 @@ public class User {
         this.likes = likes;
         this.following = following;
         this.followed = followed;
-        this.postBookmarks = postBookmarks;
+        this.bookmarks = bookmarks;
     }
 
-    public User(int i, String email, String password, String firstName, String lastName) {
+    public User(int userId,String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -177,12 +181,12 @@ public class User {
         this.followed = followed;
     }
 
-    public Set<Post> getPostBookmarks() {
-        return postBookmarks;
+    public List<Bookmark> getBookmarks() {
+        return bookmarks;
     }
 
-    public void setPostBookmarks(Set<Post> postBookmarks) {
-        this.postBookmarks = postBookmarks;
+    public void setBookmarks(List<Bookmark> bookmarks) {
+        this.bookmarks = bookmarks;
     }
 
     @Override
@@ -190,12 +194,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && Objects.equals(email, user.email) && Objects.equals(nickname, user.nickname) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(posts, user.posts) && Objects.equals(securityQuestions, user.securityQuestions) && Objects.equals(likes, user.likes) && Objects.equals(following, user.following) && Objects.equals(followed, user.followed) && Objects.equals(postBookmarks, user.postBookmarks);
+        return userId == user.userId && Objects.equals(email, user.email) && Objects.equals(nickname, user.nickname) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(posts, user.posts) && Objects.equals(securityQuestions, user.securityQuestions) && Objects.equals(likes, user.likes) && Objects.equals(following, user.following) && Objects.equals(followed, user.followed) && Objects.equals(bookmarks, user.bookmarks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, email, nickname, password, firstName, lastName, posts, securityQuestions, likes, following, followed, postBookmarks);
+        return Objects.hash(userId, email, nickname, password, firstName, lastName, posts, securityQuestions, likes, following, followed, bookmarks);
     }
 
     @Override
@@ -207,12 +211,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", posts=" + posts +
-                ", securityQuestions=" + securityQuestions +
-                ", likes=" + likes +
-                ", following=" + following +
-                ", followed=" + followed +
-                ", postBookmarks=" + postBookmarks +
                 '}';
     }
 }

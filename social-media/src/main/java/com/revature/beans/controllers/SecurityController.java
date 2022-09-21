@@ -3,7 +3,6 @@ package com.revature.beans.controllers;
 
 import com.revature.beans.services.SecurityService;
 import com.revature.models.SecurityQuestion;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +16,11 @@ import java.util.Optional;
 public class SecurityController {
     private SecurityService service;
 
-    @Autowired
     public SecurityController(SecurityService securityService) {
         this.service = securityService;
     }
+
+    //Gets Security Question/Answer by ID
     @RequestMapping(value = "/{securityQuestionId}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody SecurityQuestion findSecurityQuestion(@PathVariable Integer securityQuestionId) {
@@ -28,18 +28,21 @@ public class SecurityController {
         return optionalSecurityQuestion.get();
     }
 
+    //Gets all security questions belonging to a user
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody List<SecurityQuestion> getSecurityQuestionsByUserId(@PathVariable Integer userId) {
         return service.readByUserId(userId);
     }
 
+    //Gets all security Questions (probably useless).
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody List<SecurityQuestion> readAllSecurityQuestions() {
         return service.readAllSecurityQuestions();
     }
 
+    //Checks if User inputs the correct information for password reset.  Since 2 users could technically have the same question and answer, need to check userId as well.
     @RequestMapping(value = "/userId/{userId}", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public SecurityQuestion getByQuestionAndAnswer(@PathVariable Integer userId, @RequestBody SecurityQuestion securityQuestion) {

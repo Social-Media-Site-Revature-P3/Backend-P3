@@ -21,6 +21,7 @@ public class FollowController {
         this.service = followService;
     }
 
+    //Gets a follow by Id (most likely useless)
     @Authorized
     @GetMapping("/{followId}")
     public ResponseEntity<Follow> getByFollowId(@PathVariable Integer followId) {
@@ -33,18 +34,21 @@ public class FollowController {
         return ResponseEntity.ok(optionalFollow.get());
     }
 
+    //Gets a list of users that are following a specific person
     @Authorized
     @GetMapping("/followed/{followedId}")
-    public ResponseEntity<List<Follow>> getByFollowedId(Integer followedId) {
+    public ResponseEntity<List<Follow>> getByFollowedId(@PathVariable Integer followedId) {
         return ResponseEntity.ok(this.service.readByFollowedId(followedId));
     }
 
+    //Gets a list of users that are being followed by a specific user
     @Authorized
     @GetMapping("/follower/{followerId}")
-    public ResponseEntity<List<Follow>> getByFollowerId(Integer followerId) {
+    public ResponseEntity<List<Follow>> getByFollowerId(@PathVariable Integer followerId) {
         return ResponseEntity.ok(this.service.readByFollowerId(followerId));
     }
 
+    //Gets a List of all follows (probably useless for our purposes)
     @Authorized
     @GetMapping
     public ResponseEntity<List<Follow>> getAll() {

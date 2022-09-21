@@ -1,17 +1,15 @@
 package com.revature.models;
 
-import java.awt.print.Book;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "posts")
@@ -26,7 +24,11 @@ public class Post {
 	private String title;
 
 	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
 	private LocalDateTime createDateTime;
+
+	@UpdateTimestamp
+	private LocalDateTime updateDateTime;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -36,38 +38,40 @@ public class Post {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "post")
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Like> likes;
 
-	@ManyToMany(mappedBy = "postBookmarks", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JsonBackReference
-	private Set<User> userBookmarks = new HashSet<>();
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Bookmark> bookmarks;
 
 	public Post() {
 	}
 
-	public Post(int postId, String text, String imageUrl, String title, LocalDateTime createDateTime, List<Post> comments, User user, List<Like> likes, Set<User> userBookmarks) {
+	public Post(int postId, String text, String imageUrl, String title, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks) {
 		this.postId = postId;
 		this.text = text;
 		this.imageUrl = imageUrl;
 		this.title = title;
 		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
 		this.comments = comments;
 		this.user = user;
 		this.likes = likes;
-		this.userBookmarks = userBookmarks;
+		this.bookmarks = bookmarks;
 	}
 
-	public Post(String text, String imageUrl, String title, LocalDateTime createDateTime, List<Post> comments, User user, List<Like> likes, Set<User> userBookmarks) {
+	public Post(String text, String imageUrl, String title, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks) {
 		this.text = text;
 		this.imageUrl = imageUrl;
 		this.title = title;
 		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
 		this.comments = comments;
 		this.user = user;
 		this.likes = likes;
-		this.userBookmarks = userBookmarks;
+		this.bookmarks = bookmarks;
 	}
 
 	public int getPostId() {
@@ -110,6 +114,14 @@ public class Post {
 		this.createDateTime = createDateTime;
 	}
 
+	public LocalDateTime getUpdateDateTime() {
+		return updateDateTime;
+	}
+
+	public void setUpdateDateTime(LocalDateTime updateDateTime) {
+		this.updateDateTime = updateDateTime;
+	}
+
 	public List<Post> getComments() {
 		return comments;
 	}
@@ -134,12 +146,12 @@ public class Post {
 		this.likes = likes;
 	}
 
-	public Set<User> getUserBookmarks() {
-		return userBookmarks;
+	public List<Bookmark> getBookmarks() {
+		return bookmarks;
 	}
 
-	public void setUserBookmarks(Set<User> userBookmarks) {
-		this.userBookmarks = userBookmarks;
+	public void setBookmarks(List<Bookmark> bookmarks) {
+		this.bookmarks = bookmarks;
 	}
 
 	@Override
@@ -147,12 +159,12 @@ public class Post {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Post post = (Post) o;
-		return postId == post.postId && Objects.equals(text, post.text) && Objects.equals(imageUrl, post.imageUrl) && Objects.equals(title, post.title) && Objects.equals(createDateTime, post.createDateTime) && Objects.equals(comments, post.comments) && Objects.equals(user, post.user) && Objects.equals(likes, post.likes) && Objects.equals(userBookmarks, post.userBookmarks);
+		return postId == post.postId && Objects.equals(text, post.text) && Objects.equals(imageUrl, post.imageUrl) && Objects.equals(title, post.title) && Objects.equals(createDateTime, post.createDateTime) && Objects.equals(updateDateTime, post.updateDateTime) && Objects.equals(comments, post.comments) && Objects.equals(user, post.user) && Objects.equals(likes, post.likes) && Objects.equals(bookmarks, post.bookmarks);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(postId, text, imageUrl, title, createDateTime, comments, user, likes, userBookmarks);
+		return Objects.hash(postId, text, imageUrl, title, createDateTime, updateDateTime, comments, user, likes, bookmarks);
 	}
 
 	@Override
@@ -163,10 +175,11 @@ public class Post {
 				", imageUrl='" + imageUrl + '\'' +
 				", title='" + title + '\'' +
 				", createDateTime=" + createDateTime +
+				", updateDateTime=" + updateDateTime +
 				", comments=" + comments +
 				", user=" + user +
 				", likes=" + likes +
-				", userBookmarks=" + userBookmarks +
+				", bookmarks=" + bookmarks +
 				'}';
 	}
 }

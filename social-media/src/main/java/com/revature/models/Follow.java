@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "followers")
+@Table(name = "follows")
 public class Follow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "follow_id")
-    private int followerId;
+    private int followId;
 
     @ManyToOne
     @JoinColumn(name = "followed_id")
@@ -24,7 +24,7 @@ public class Follow {
     }
 
     public Follow(int followerId, User followedUser, User followingUser) {
-        this.followerId = followerId;
+        this.followId = followerId;
         this.followedUser = followedUser;
         this.followerUser = followingUser;
     }
@@ -34,12 +34,12 @@ public class Follow {
         this.followerUser = followingUser;
     }
 
-    public int getFollowerId() {
-        return followerId;
+    public int getFollowId() {
+        return followId;
     }
 
-    public void setFollowerId(int followerId) {
-        this.followerId = followerId;
+    public void setFollowId(int followId) {
+        this.followId = followId;
     }
 
     public User getFollowedUser() {
@@ -63,18 +63,18 @@ public class Follow {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Follow follow = (Follow) o;
-        return followerId == follow.followerId && Objects.equals(followedUser, follow.followedUser) && Objects.equals(followerUser, follow.followerUser);
+        return followId == follow.followId && Objects.equals(followedUser, follow.followedUser) && Objects.equals(followerUser, follow.followerUser);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(followerId, followedUser, followerUser);
+        return Objects.hash(followId, followedUser, followerUser);
     }
 
     @Override
     public String toString() {
         return "Follow{" +
-                "followerId=" + followerId +
+                "followerId=" + followId +
                 ", followedUser=" + followedUser +
                 ", followingUser=" + followerUser +
                 '}';

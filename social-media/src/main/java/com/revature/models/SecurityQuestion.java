@@ -18,7 +18,7 @@ public class SecurityQuestion {
     @Column(nullable = false)
     private String answer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
 

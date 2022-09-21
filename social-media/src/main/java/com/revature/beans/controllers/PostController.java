@@ -20,6 +20,7 @@ public class PostController {
         this.postService = postService;
     }
 
+    //gets a single post by its ID (view single post)
     @Authorized
     @GetMapping(value = "/{postId}")
     public ResponseEntity<Post> getByPostId(@PathVariable Integer postId) {
@@ -32,24 +33,33 @@ public class PostController {
         return ResponseEntity.ok(optionalPost.get());
     }
 
+    //Gets all Posts by a user (List of posts on profile page)
     @Authorized
     @GetMapping(value = "/user/{userId}")
     public ResponseEntity<List<Post>> getByUserId(@PathVariable Integer userId) {
         return ResponseEntity.ok(this.postService.readByUserId(userId));
     }
 
+    //Gets posts by who you are following (main feed)
     @Authorized
     @GetMapping("/follow")
     public ResponseEntity<List<Post>> getByFollowed(@RequestBody List<Integer> followedIds) {
         return ResponseEntity.ok(this.postService.readByFollowed(followedIds));
     }
-    
+
+    //Gets all posts (not particularly useful(?))
     @Authorized
     @GetMapping
     public ResponseEntity<List<Post>> getAllPosts() {
     	return ResponseEntity.ok(this.postService.readAll());
     }
-    
+
+    @Authorized
+    @PostMapping
+    public ResponseEntity<Post> postPost(@RequestBody Post post) {
+        return ResponseEntity.ok(this.postService.upsert(post));
+    }
+
     @Authorized
     @PutMapping
     public ResponseEntity<Post> upsertPost(@RequestBody Post post) {

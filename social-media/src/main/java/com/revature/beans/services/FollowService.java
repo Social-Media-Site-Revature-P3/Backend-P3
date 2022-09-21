@@ -21,6 +21,7 @@ public class FollowService {
     }
 
     public List<Follow> readByFollowedId(Integer followedId) {
+        System.out.println(this.followRepository.findByFollowedUser_UserId(followedId));
         return this.followRepository.findByFollowedUser_UserId(followedId);
     }
 
