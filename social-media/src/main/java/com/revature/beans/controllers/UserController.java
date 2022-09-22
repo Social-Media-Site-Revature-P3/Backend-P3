@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping(value = "/full-name")
     public ResponseEntity<List<User>> getUsersByFullName(@RequestBody UserFullName name) {
-        return ResponseEntity.ok(this.service.findByFullName(name.getFirstName(), name.getLastName()));
+        return ResponseEntity.ok(this.service.findByFullName("^[\\s\\S]*"+name.getFirstName()+"[\\s\\S]*$", "^[\\s\\S]*"+name.getLastName()+"[\\s\\S]*$"));
     }
 
     @PostMapping(value = "/name")
