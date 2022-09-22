@@ -32,12 +32,12 @@ public class UserController {
         return ResponseEntity.ok(optionalUser.get());
     }
 
-    @GetMapping(value = "/full-name")
+    @PostMapping(value = "/full-name")
     public ResponseEntity<List<User>> getUsersByFullName(@RequestBody UserFullName name) {
         return ResponseEntity.ok(this.service.findByFullName(name.getFirstName(), name.getLastName()));
     }
 
-    @GetMapping(value = "/name")
+    @PostMapping(value = "/name")
     public ResponseEntity<List<User>> getUsersByFirstOrLastName(@RequestBody UserFullName name) {
         return ResponseEntity.ok(this.service.findByFirstOrLastName(name.getFirstName()));
     }
