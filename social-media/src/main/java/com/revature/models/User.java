@@ -22,6 +22,7 @@ public class User {
     private String email;
     private String nickname;
     private String password;
+    private String aboutMe;
     private String firstName;
     private String lastName;
     private String profilePicture;
@@ -58,7 +59,9 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String email, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
+
+    public User(int userId, String email, String aboutMe, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
+        this.aboutMe=aboutMe;
         this.userId = userId;
         this.email = email;
         this.nickname = nickname;
@@ -168,6 +171,14 @@ public class User {
         this.securityQuestions = securityQuestions;
     }
 
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
     public List<Like> getLikes() {
         return likes;
     }
@@ -210,7 +221,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, email, nickname, password, firstName, lastName, profilePicture, posts, securityQuestions, likes, following, followed, bookmarks);
+        return Objects.hash(userId, email, nickname, aboutMe, password, firstName, lastName, profilePicture, posts, securityQuestions, likes, following, followed, bookmarks);
     }
 
     @Override
@@ -222,6 +233,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", aboutMe='" + aboutMe + '\'' +
                 ", profilePicture='" + profilePicture + '\'' +
                 '}';
     }
