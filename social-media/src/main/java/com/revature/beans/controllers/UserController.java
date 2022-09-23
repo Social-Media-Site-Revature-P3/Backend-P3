@@ -3,6 +3,7 @@ package com.revature.beans.controllers;
 import com.revature.annotations.Authorized;
 import com.revature.beans.services.UserService;
 import com.revature.dtos.UserFullName;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class UserController {
 
     @Authorized
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
+    public ResponseEntity<User> updateUser(@RequestBody User user) throws ResourceNotFoundException {
         return ResponseEntity.ok(this.service.save(user));
     }
 

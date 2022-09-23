@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmailAndPassword(String email, String password);
 
+    Optional<User> findByEmail(String email);
+
     List<User> findByFirstNameAndLastName(String firstName, String lastName);
 
     @Query(value = "SELECT * FROM users u WHERE u.first_name = :name OR u.last_name = :name", nativeQuery = true)

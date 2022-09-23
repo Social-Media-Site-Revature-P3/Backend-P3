@@ -3,9 +3,11 @@ package com.revature.beans.services;
 import com.revature.beans.repositories.PostRepository;
 import com.revature.beans.repositories.UserRepository;
 import com.revature.dtos.UserFullName;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.Post;
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -41,9 +43,15 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User save(User user) {
+    public User save(User user) throws ResourceNotFoundException {
+        Optional<User> savedUser = userRepository.findByEmail(user.getEmail());
+        if(savedUser.isPresent()){
+            throw new ResourceNotFoundException("User already exists" + user.getEmail());
+        }
         return this.userRepository.save(user);
     }
+
+
 
     public void deleteUser(Integer userId) {
         List<Post> postList = this.postRepository.findByUser_UserId(userId);
