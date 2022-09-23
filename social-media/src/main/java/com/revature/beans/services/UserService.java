@@ -1,7 +1,9 @@
 package com.revature.beans.services;
 
+import com.revature.beans.repositories.PostRepository;
 import com.revature.beans.repositories.UserRepository;
 import com.revature.dtos.UserFullName;
+import com.revature.models.Post;
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     public Optional<User> findByUserId(Integer userId) {
@@ -42,6 +46,17 @@ public class UserService {
     }
 
     public void deleteUser(Integer userId) {
+        List<Post> postList = this.postRepository.findByUser_UserId(userId);
+        for(Post post: postList) {
+            if(this.postRepository.findById(post.getPostId()).isPresent()) {
+                if(this.postRepository.findPostIfComment(post.getPostId()).isPresent()) {
+                    this.postRepository.deleteComment(post.getPostId());
+                    this.postRepository.deleteById(post.getPostId());
+                }else {
+                    this.postRepository.deleteById(post.getPostId());
+                }
+            }
+        }
         this.userRepository.deleteById(userId);
     }
 }

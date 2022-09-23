@@ -3,6 +3,7 @@ package com.revature.beans.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import com.revature.dtos.Comment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.revature.annotations.Authorized;
@@ -47,6 +48,12 @@ public class PostController {
         return ResponseEntity.ok(this.postService.readByFollowed(followedIds));
     }
 
+    @Authorized
+    @GetMapping("/comments/{postId}")
+    public ResponseEntity<List<Post>> getByComments(@PathVariable Integer postId) {
+        return ResponseEntity.ok(this.postService.readByComments(postId));
+    }
+
     //Gets all posts (not particularly useful(?))
     @Authorized
     @GetMapping
@@ -61,14 +68,24 @@ public class PostController {
     }
 
     @Authorized
-    @PutMapping
-    public ResponseEntity<Post> upsertPost(@RequestBody Post post) {
-    	return ResponseEntity.ok(this.postService.upsert(post));
+    @PostMapping(value = "/comment")
+    public void postComment(@RequestBody Comment comment) {
+        this.postService.createComment(comment);
+    }
+
+    @Authorized
+    @PutMapping(value = ("/update-post/{postId}"))
+    public void upsertPost(@RequestBody Post post, @PathVariable Integer postId) {
+        String image = post.getImageUrl();
+        String text = post.getText();
+        String title = post.getTitle();
+        Integer userId = post.getUser().getUserId();
+    	this.postService.update(postId, image, text, title, userId);
     }
 
     @Authorized
     @DeleteMapping(value = "/{postId}")
     public void deletePost(@PathVariable Integer postId) {
-        this.postService.deletePost(postId);
+        this.postService.deleteComment(postId);
     }
 }
