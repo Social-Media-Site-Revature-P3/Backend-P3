@@ -1,11 +1,13 @@
 package com.revature.beans.services;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 import com.revature.beans.repositories.PostRepository;
 import com.revature.dtos.Comment;
+import com.revature.dtos.FollowedId;
 import org.springframework.stereotype.Service;
 
 import com.revature.models.Post;
@@ -27,17 +29,20 @@ public class PostService {
 		return this.postRepository.findByUser_UserId(userId);
 	}
 
-	public List<Post> readByFollowed(List<Integer> followedIds) {
+	public List<Post> readByFollowed(List<FollowedId> followedIds) {
 		List<Post> followedList = new LinkedList<>();
-		for(Integer id : followedIds) {
-			Optional<Post> optionalPost = this.postRepository.findById(id);
-			try {
-				if(optionalPost.isPresent()) {
-					Post post = optionalPost.get();
-					followedList.add(post);
+		for(FollowedId id : followedIds) {
+			List<Post> postList = this.postRepository.findByUser_UserId(id.getFollowedId());
+			for(Post post: postList){
+				Optional<Post> optionalPost = this.postRepository.findById(post.getPostId());
+				try {
+					if(optionalPost.isPresent()) {
+						Post userPost = optionalPost.get();
+						followedList.add(userPost);
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
 				}
-			}catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 		return followedList;

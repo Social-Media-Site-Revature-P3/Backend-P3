@@ -8,7 +8,6 @@ import com.revature.models.Post;
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.Optional;
 
