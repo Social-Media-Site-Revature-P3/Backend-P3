@@ -17,6 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByFirstNameAndLastName(String firstName, String lastName);
 
-    @Query(value = "SELECT * FROM users u WHERE u.first_name = :name OR u.last_name = :name", nativeQuery = true)
+    @Query(value = "SELECT * FROM users u WHERE u.first_name ~* :name OR u.last_name ~* :name", nativeQuery = true)
     List<User> findByFirstNameOrLastName(@Param("name") String name);
 }
