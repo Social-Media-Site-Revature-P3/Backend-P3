@@ -2,6 +2,7 @@ package com.revature.beans.controllers;
 
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.User;
 import com.revature.beans.services.AuthService;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) throws ResourceNotFoundException {
         User created = new User(0,
                 registerRequest.getEmail(),
                 registerRequest.getPassword(),

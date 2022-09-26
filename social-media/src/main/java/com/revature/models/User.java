@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import lombok.*;
 
 @Entity
 @Table(name = "users")
@@ -59,6 +60,16 @@ public class User {
     public User() {
     }
 
+    public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+    }
 
     public User(int userId, String email, String aboutMe, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
         this.aboutMe=aboutMe;
