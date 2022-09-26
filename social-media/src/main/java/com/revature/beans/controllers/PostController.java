@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.revature.dtos.Comment;
+import com.revature.dtos.FollowedId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.revature.annotations.Authorized;
@@ -43,8 +44,8 @@ public class PostController {
 
     //Gets posts by who you are following (main feed)
     @Authorized
-    @GetMapping("/follow")
-    public ResponseEntity<List<Post>> getByFollowed(@RequestBody List<Integer> followedIds) {
+    @PostMapping("/follow")
+    public ResponseEntity<List<Post>> getByFollowed(@RequestBody List<FollowedId> followedIds) {
         return ResponseEntity.ok(this.postService.readByFollowed(followedIds));
     }
 

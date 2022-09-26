@@ -1,9 +1,9 @@
-package com.revature.beans.controllers;
+package com.revature.controllers;
 
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
 import com.revature.models.User;
-import com.revature.beans.services.AuthService;
+import com.revature.services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +49,7 @@ public class AuthController {
                 registerRequest.getPassword(),
                 registerRequest.getFirstName(),
                 registerRequest.getLastName());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
     }
 }
