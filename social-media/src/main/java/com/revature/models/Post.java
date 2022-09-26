@@ -23,6 +23,8 @@ public class Post {
 	private String imageUrl;
 	private String title;
 
+	private boolean comment;
+
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
 	private LocalDateTime createDateTime;
@@ -49,11 +51,12 @@ public class Post {
 	public Post() {
 	}
 
-	public Post(int postId, String text, String imageUrl, String title, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks) {
+	public Post(int postId, String text, String imageUrl, String title, boolean comment, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks) {
 		this.postId = postId;
 		this.text = text;
 		this.imageUrl = imageUrl;
 		this.title = title;
+		this.comment = comment;
 		this.createDateTime = createDateTime;
 		this.updateDateTime = updateDateTime;
 		this.comments = comments;
@@ -62,10 +65,11 @@ public class Post {
 		this.bookmarks = bookmarks;
 	}
 
-	public Post(String text, String imageUrl, String title, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks) {
+	public Post(String text, String imageUrl, String title, boolean comment, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks) {
 		this.text = text;
 		this.imageUrl = imageUrl;
 		this.title = title;
+		this.comment = comment;
 		this.createDateTime = createDateTime;
 		this.updateDateTime = updateDateTime;
 		this.comments = comments;
@@ -104,6 +108,14 @@ public class Post {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public boolean isComment() {
+		return comment;
+	}
+
+	public void setComment(boolean comment) {
+		this.comment = comment;
 	}
 
 	public LocalDateTime getCreateDateTime() {
@@ -159,12 +171,12 @@ public class Post {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Post post = (Post) o;
-		return postId == post.postId && Objects.equals(text, post.text) && Objects.equals(imageUrl, post.imageUrl) && Objects.equals(title, post.title) && Objects.equals(createDateTime, post.createDateTime) && Objects.equals(updateDateTime, post.updateDateTime) && Objects.equals(comments, post.comments) && Objects.equals(user, post.user) && Objects.equals(likes, post.likes) && Objects.equals(bookmarks, post.bookmarks);
+		return postId == post.postId && comment == post.comment && Objects.equals(text, post.text) && Objects.equals(imageUrl, post.imageUrl) && Objects.equals(title, post.title) && Objects.equals(createDateTime, post.createDateTime) && Objects.equals(updateDateTime, post.updateDateTime) && Objects.equals(comments, post.comments) && Objects.equals(user, post.user) && Objects.equals(likes, post.likes) && Objects.equals(bookmarks, post.bookmarks);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(postId, text, imageUrl, title, createDateTime, updateDateTime, comments, user, likes, bookmarks);
+		return Objects.hash(postId, text, imageUrl, title, comment, createDateTime, updateDateTime, comments, user, likes, bookmarks);
 	}
 
 	@Override
@@ -174,6 +186,7 @@ public class Post {
 				", text='" + text + '\'' +
 				", imageUrl='" + imageUrl + '\'' +
 				", title='" + title + '\'' +
+				", comment='" + comment + '\'' +
 				", createDateTime=" + createDateTime +
 				", updateDateTime=" + updateDateTime +
 				", comments=" + comments +

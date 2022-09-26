@@ -42,6 +42,12 @@ public class PostController {
         return ResponseEntity.ok(this.postService.readByUserId(userId));
     }
 
+    @Authorized
+    @GetMapping(value = "/post/{userId}")
+    public ResponseEntity<List<Post>> getByOriginalPost(@PathVariable Integer userId) {
+        return ResponseEntity.ok(this.postService.readByOriginalPost(userId));
+    }
+
     //Gets posts by who you are following (main feed)
     @Authorized
     @PostMapping("/follow")
