@@ -7,15 +7,17 @@ public class RegisterRequest {
     private String password;
     private String firstName;
     private String lastName;
+    private String nickname;
 
     public RegisterRequest() {
     }
 
-    public RegisterRequest(String email, String password, String firstName, String lastName) {
+    public RegisterRequest(String email, String password, String firstName, String lastName, String nickname) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.nickname = nickname;
     }
 
     public String getEmail() {
@@ -50,17 +52,25 @@ public class RegisterRequest {
         this.lastName = lastName;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RegisterRequest that = (RegisterRequest) o;
-        return Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName);
+        return Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(nickname, that.nickname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, password, firstName, lastName);
+        return Objects.hash(email, password, firstName, lastName, nickname);
     }
 
     @Override
@@ -70,6 +80,7 @@ public class RegisterRequest {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", nickname='" + nickname + '\'' +
                 '}';
     }
 }
