@@ -35,7 +35,7 @@ public class LikeController {
     }
 
     //Gets all likes related to a post
-    @Authorized
+
     @GetMapping("/post/{postId}")
     public ResponseEntity<List<List<Like>>> getByPostId(@PathVariable Integer postId) {
         return ResponseEntity.ok(this.service.readByPostId(postId));

@@ -22,7 +22,6 @@ public class Post {
 	private String text;
 	private String imageUrl;
 	private String title;
-
 	private boolean comment;
 
 	@CreationTimestamp
@@ -186,7 +185,7 @@ public class Post {
 				", text='" + text + '\'' +
 				", imageUrl='" + imageUrl + '\'' +
 				", title='" + title + '\'' +
-				", comment='" + comment + '\'' +
+				", comment=" + comment +
 				", createDateTime=" + createDateTime +
 				", updateDateTime=" + updateDateTime +
 				", comments=" + comments +

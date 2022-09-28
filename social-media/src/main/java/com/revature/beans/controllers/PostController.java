@@ -42,6 +42,7 @@ public class PostController {
         return ResponseEntity.ok(this.postService.readByUserId(userId));
     }
 
+    //Gets Original Posts Only
     @Authorized
     @GetMapping(value = "/post/{userId}")
     public ResponseEntity<List<Post>> getByOriginalPost(@PathVariable Integer userId) {
