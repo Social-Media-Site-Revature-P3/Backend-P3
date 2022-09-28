@@ -50,8 +50,6 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
-
-
     public void deleteUser(Integer userId) {
         List<Post> postList = this.postRepository.findByUser_UserId(userId);
         for(Post post: postList) {
