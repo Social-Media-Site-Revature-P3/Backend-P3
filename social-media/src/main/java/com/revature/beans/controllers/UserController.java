@@ -43,13 +43,13 @@ public class UserController {
         return ResponseEntity.ok(this.service.findByFirstOrLastName(name.getFirstName()));
     }
 
-    @Authorized
+    //@Authorized
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(this.service.findAll());
     }
 
-    @Authorized
+    //@Authorized
     @PutMapping
     public ResponseEntity<User> updateUser(@RequestBody User user) throws ResourceNotFoundException {
         return ResponseEntity.ok(this.service.save(user));

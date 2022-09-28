@@ -21,7 +21,7 @@ public class BookmarkController {
         this.service = bookmarkService;
     }
 
-    @Authorized
+    //@Authorized
     @GetMapping(value = "/{bookmarkId}")
     public ResponseEntity<Bookmark> getBookmarkById(@PathVariable Integer bookmarkId) {
         Optional<Bookmark> optionalBookmark = this.service.readByBookmarkId(bookmarkId);
@@ -34,34 +34,34 @@ public class BookmarkController {
     }
 
     //Gets all bookmarks related to a post
-    @Authorized
+    //@Authorized
     @GetMapping("/post/{postId}")
     public ResponseEntity<List<Bookmark>> getByPostId(@PathVariable Integer postId) {
         return ResponseEntity.ok(this.service.readByPostId(postId));
     }
 
     //Gets all bookmarks from a user
-    @Authorized
+    //@Authorized
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Bookmark>> getByUserId(@PathVariable Integer userId) {
         return ResponseEntity.ok(this.service.readByUserId(userId));
     }
 
     //Gets all bookmarks (probably useless)
-    @Authorized
+    //@Authorized
     @GetMapping
     public ResponseEntity<List<Bookmark>> getAll() {
         return ResponseEntity.ok(this.service.readAll());
     }
 
     //No Update parameter. Bookmark either exists, or doesn't
-    @Authorized
+    //@Authorized
     @PostMapping
     public ResponseEntity<Bookmark> createLike(@RequestBody Bookmark bookmark) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.service.createBookmark(bookmark));
     }
 
-    @Authorized
+    //@Authorized
     @DeleteMapping("/{bookmarkId}")
     public void deleteLike(@PathVariable Integer bookmarkId) {
         this.service.deleteBookmark(bookmarkId);

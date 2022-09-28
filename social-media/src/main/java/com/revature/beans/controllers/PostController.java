@@ -23,7 +23,7 @@ public class PostController {
     }
 
     //gets a single post by its ID (view single post)
-    @Authorized
+    //@Authorized
     @GetMapping(value = "/{postId}")
     public ResponseEntity<Post> getByPostId(@PathVariable Integer postId) {
         Optional<Post> optionalPost = this.postService.readByPostId(postId);
@@ -36,52 +36,52 @@ public class PostController {
     }
 
     //Gets all Posts by a user (List of posts on profile page)
-    @Authorized
+    //@Authorized
     @GetMapping(value = "/user/{userId}")
     public ResponseEntity<List<Post>> getByUserId(@PathVariable Integer userId) {
         return ResponseEntity.ok(this.postService.readByUserId(userId));
     }
 
     //Gets Original Posts Only
-    @Authorized
+    //@Authorized
     @GetMapping(value = "/post/{userId}")
     public ResponseEntity<List<Post>> getByOriginalPost(@PathVariable Integer userId) {
         return ResponseEntity.ok(this.postService.readByOriginalPost(userId));
     }
 
     //Gets posts by who you are following (main feed)
-    @Authorized
+    //@Authorized
     @PostMapping("/follow")
     public ResponseEntity<List<Post>> getByFollowed(@RequestBody List<FollowedId> followedIds) {
         return ResponseEntity.ok(this.postService.readByFollowed(followedIds));
     }
 
-    @Authorized
+    //@Authorized
     @GetMapping("/comments/{postId}")
     public ResponseEntity<List<Post>> getByComments(@PathVariable Integer postId) {
         return ResponseEntity.ok(this.postService.readByComments(postId));
     }
 
     //Gets all posts (not particularly useful(?))
-    @Authorized
+    //@Authorized
     @GetMapping
     public ResponseEntity<List<Post>> getAllPosts() {
     	return ResponseEntity.ok(this.postService.readAll());
     }
 
-    @Authorized
+    //@Authorized
     @PostMapping
     public ResponseEntity<Post> postPost(@RequestBody Post post) {
         return ResponseEntity.ok(this.postService.upsert(post));
     }
 
-    @Authorized
+    //@Authorized
     @PostMapping(value = "/comment")
     public void postComment(@RequestBody Comment comment) {
         this.postService.createComment(comment);
     }
 
-    @Authorized
+    //@Authorized
     @PutMapping(value = ("/update-post/{postId}"))
     public void upsertPost(@RequestBody Post post, @PathVariable Integer postId) {
         String image = post.getImageUrl();
@@ -91,7 +91,7 @@ public class PostController {
     	this.postService.update(postId, image, text, title, userId);
     }
 
-    @Authorized
+    //@Authorized
     @DeleteMapping(value = "/{postId}")
     public void deletePost(@PathVariable Integer postId) {
         this.postService.deleteComment(postId);
