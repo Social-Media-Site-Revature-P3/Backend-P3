@@ -61,7 +61,7 @@ public class User {
 
 
     public User(int userId, String email, String aboutMe, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
-        this.aboutMe=aboutMe;
+        this.aboutMe = aboutMe;
         this.userId = userId;
         this.email = email;
         this.nickname = nickname;
@@ -75,6 +75,17 @@ public class User {
         this.following = following;
         this.followed = followed;
         this.bookmarks = bookmarks;
+    }
+
+    public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
     }
 
     public User(String email, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
@@ -92,7 +103,15 @@ public class User {
         this.bookmarks = bookmarks;
     }
 
-    public User(int userId,String email, String password, String firstName, String lastName) {
+    public User(int userId, String email, String nickname, String password, String firstName, String lastName) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User(int userId, String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
