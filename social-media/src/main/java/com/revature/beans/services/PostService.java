@@ -29,6 +29,10 @@ public class PostService {
 		return this.postRepository.findByUser_UserId(userId);
 	}
 
+	public List<Post> readByOriginalPost(Integer userId) {
+		return this.postRepository.findOriginalPost(userId);
+	}
+
 	public List<Post> readByFollowed(List<FollowedId> followedIds) {
 		List<Post> followedList = new LinkedList<>();
 		for(FollowedId id : followedIds) {

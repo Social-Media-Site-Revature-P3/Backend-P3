@@ -4,6 +4,7 @@ import com.revature.beans.repositories.LikeRepository;
 import com.revature.models.Like;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +21,13 @@ public class LikeService {
         return this.likeRepo.findById(likeId);
     }
 
-    public List<Like> readByPostId(Integer postId) {
-        return this.likeRepo.findByPost_PostId(postId);
+    public List<List<Like>> readByPostId(Integer postId) {
+        List<List<Like>> post = new ArrayList<>();
+        List<Like> liked = this.likeRepo.findByLiked(postId);
+        List<Like> disliked = this.likeRepo.findByDisliked(postId);
+        post.add(liked);
+        post.add(disliked);
+        return post;
     }
 
     public List<Like> readByUserId(Integer userId) {

@@ -18,6 +18,9 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
 
     List<Post> findByUser_UserId(Integer userId);
 
+    @Query(value = "SELECT * FROM posts WHERE user_id = :userId AND comment = false", nativeQuery = true)
+    List<Post> findOriginalPost(Integer userId);
+
     @Query(value = "SELECT * FROM posts p LEFT JOIN posts_comments pc ON p.post_id = pc.comments_post_id WHERE pc.post_post_id = :postId", nativeQuery = true)
     List<Post> findCommentsByPost(@Param("postId") Integer postId);
 
