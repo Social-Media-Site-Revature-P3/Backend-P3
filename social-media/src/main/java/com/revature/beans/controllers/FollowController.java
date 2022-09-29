@@ -22,7 +22,7 @@ public class FollowController {
     }
 
     //Gets a follow by Id (most likely useless)
-    @Authorized
+    //@Authorized
     @GetMapping("/{followId}")
     public ResponseEntity<Follow> getByFollowId(@PathVariable Integer followId) {
         Optional<Follow> optionalFollow = this.service.readByFollowId(followId);
@@ -35,33 +35,33 @@ public class FollowController {
     }
 
     //Gets a list of users that are following a specific person
-    @Authorized
+    //@Authorized
     @GetMapping("/followed/{followedId}")
     public ResponseEntity<List<Follow>> getByFollowedId(@PathVariable Integer followedId) {
         return ResponseEntity.ok(this.service.readByFollowedId(followedId));
     }
 
     //Gets a list of users that are being followed by a specific user
-    @Authorized
+    //@Authorized
     @GetMapping("/follower/{followerId}")
     public ResponseEntity<List<Follow>> getByFollowerId(@PathVariable Integer followerId) {
         return ResponseEntity.ok(this.service.readByFollowerId(followerId));
     }
 
     //Gets a List of all follows (probably useless for our purposes)
-    @Authorized
+    //@Authorized
     @GetMapping
     public ResponseEntity<List<Follow>> getAll() {
         return ResponseEntity.ok(this.service.readAll());
     }
 
-    @Authorized
+    //@Authorized
     @PostMapping
     public ResponseEntity<Follow> createFollow(@RequestBody Follow follow) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.service.createFollow(follow));
     }
 
-    @Authorized
+    //@Authorized
     @DeleteMapping("/{followId}")
     public void deleteFollow(@PathVariable Integer followId) {
         this.service.deleteFollow(followId);

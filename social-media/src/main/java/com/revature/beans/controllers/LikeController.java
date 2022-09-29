@@ -22,7 +22,7 @@ public class LikeController {
     }
 
     //Gets an individual like (useless for us)
-    @Authorized
+    //@Authorized
     @GetMapping(value = "/{likeId}")
     public ResponseEntity<Like> getLikeById(@PathVariable Integer likeId) {
         Optional<Like> optionalLike = this.service.readByLikeId(likeId);
@@ -42,27 +42,27 @@ public class LikeController {
     }
 
     //Gets all likes from a user (possibly useless(?), depends on if we want to display all liked posts by a user)
-    @Authorized
+    //@Authorized
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Like>> getByUserId(@PathVariable Integer userId) {
         return ResponseEntity.ok(this.service.readByUserId(userId));
     }
 
     //Gets all likes (probably useless)
-    @Authorized
+    //@Authorized
     @GetMapping
     public ResponseEntity<List<Like>> getAll() {
         return ResponseEntity.ok(this.service.readAll());
     }
 
     //No Update parameter. Workflow on front end to compensate
-    @Authorized
+    //@Authorized
     @PostMapping
     public ResponseEntity<Like> createLike(@RequestBody Like like) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.service.createLike(like));
     }
 
-    @Authorized
+    //@Authorized
     @DeleteMapping("/{likeId}")
     public void deleteLike(@PathVariable Integer likeId) {
         this.service.deleteLike(likeId);
