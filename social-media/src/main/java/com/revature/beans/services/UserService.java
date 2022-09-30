@@ -31,11 +31,11 @@ public class UserService {
     }
 
     public List<User> findByFullName(String firstName, String lastName) {
-        return this.userRepository.findByFirstNameAndLastName(firstName, lastName);
+        return this.userRepository.findByFirstNameLastName(firstName, lastName);
     }
 
     public List<User> findByFirstOrLastName(String name) {
-        return this.userRepository.findByFirstNameOrLastName(name);
+        return this.userRepository.findByFirstNameOrLastName("^[\\s\\S]*"+name+"[\\s\\S]*$");
     }
 
     public List<User> findAll() {

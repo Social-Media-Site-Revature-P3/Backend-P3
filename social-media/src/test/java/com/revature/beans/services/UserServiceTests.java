@@ -85,7 +85,7 @@ public class UserServiceTests {
 
     public void givenFullName_whenFindByFullName_thenReturnUserObject(){
 
-        given(userRepository.findByFirstNameAndLastName("Kidist", "Bishaw"))
+        given(userRepository.findByFirstNameLastName("Kidist", "Bishaw"))
                 .willReturn(List.of(user));
 
         List<User> userList = userService.findByFullName(user.getFirstName(), user.getLastName());
