@@ -48,10 +48,11 @@ public class AuthController {
     public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) throws ResourceNotFoundException {
         User created = new User(0,
                 registerRequest.getEmail(),
+                registerRequest.getNickname(),
                 registerRequest.getPassword(),
                 registerRequest.getFirstName(),
-                registerRequest.getLastName(),
-                registerRequest.getNickname());
+                registerRequest.getLastName());
+
 
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
     }
