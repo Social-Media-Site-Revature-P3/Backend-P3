@@ -77,6 +77,14 @@ public class Post {
 		this.bookmarks = bookmarks;
 	}
 
+	public Post(int postId, String text, String imageUrl, String title, boolean comment) {
+		this.postId = postId;
+		this.text = text;
+		this.imageUrl = imageUrl;
+		this.title = title;
+		this.comment = comment;
+	}
+
 	public int getPostId() {
 		return postId;
 	}

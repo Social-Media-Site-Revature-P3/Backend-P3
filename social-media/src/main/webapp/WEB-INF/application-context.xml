@@ -7,4 +7,8 @@
 
     <bean id="userService" class="com.revature.service.UserService" />
     <bean id="securityService" class="com.revature.service.SecurityService" />
+    <bean id="bookmarkService" class="com.revature.service.BookmarkService" />
+    <bean id="followService" class="com.revature.service.FollowService" />
+    <bean id="likeService" class="com.revature.service.LikeService" />
+    <bean id="postService" class="com.revature.service.PostService" />
 </beans>

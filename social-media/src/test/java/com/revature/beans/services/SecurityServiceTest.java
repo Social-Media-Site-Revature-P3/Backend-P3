@@ -25,7 +25,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith({MockitoExtension.class})
-@RunWith(SpringRunner.class)
 @ContextConfiguration(locations={"social-media:src/main/webapp/WEB-INF/application-context.xml"})
 class SecurityServiceTest {
 
