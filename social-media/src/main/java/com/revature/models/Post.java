@@ -31,7 +31,7 @@ public class Post {
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Post> comments;
 

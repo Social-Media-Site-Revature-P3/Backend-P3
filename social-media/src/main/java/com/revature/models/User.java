@@ -57,6 +57,7 @@ public class User {
     public User() {
     }
 
+
     public User(int userId, String email, String aboutMe, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
         this.aboutMe = aboutMe;
         this.userId = userId;
