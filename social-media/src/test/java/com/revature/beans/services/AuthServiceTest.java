@@ -36,11 +36,12 @@ class AuthServiceTest {
     @Test
     void findByCredentials() {
         String email = "kidu@bishaw.com", password = "pass1";
+
         given(userRepository.findByEmailAndPassword(email, password)).willReturn(Optional.of(user));
 
-        User savedUser = userService.findByCredentials((user.getEmail()), user.getPassword()).get();
-
+        User savedUser = userService.findByCredentials(email, password).get();
         assertThat(savedUser).isNotNull();
+
     }
     @DisplayName("test method for AuthService register method")
     @Test
