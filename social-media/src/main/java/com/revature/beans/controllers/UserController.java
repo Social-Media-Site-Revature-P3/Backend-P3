@@ -52,7 +52,8 @@ public class UserController {
     //@Authorized
     @PutMapping
     public ResponseEntity<User> updateUser(@RequestBody User user) throws ResourceNotFoundException {
-        return ResponseEntity.ok(this.service.save(user));
+        //return ResponseEntity.ok(this.service.save(user));
+        return ResponseEntity.ok(this.service.updateUser(user));
     }
 
     @DeleteMapping(value = "/{userId}")
