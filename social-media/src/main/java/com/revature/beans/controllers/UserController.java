@@ -3,6 +3,7 @@ package com.revature.beans.controllers;
 import com.revature.annotations.Authorized;
 import com.revature.beans.services.UserService;
 import com.revature.dtos.UserFullName;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,17 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.service = userService;
+    }
+
+    @GetMapping(value = "/email/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+        Optional<User> optionalUser = service.findByEmail(email);
+        try {
+            optionalUser.isPresent();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(optionalUser.get());
     }
 
     @GetMapping(value = "/{userId}")
@@ -48,9 +60,9 @@ public class UserController {
         return ResponseEntity.ok(this.service.findAll());
     }
 
-    @Authorized
+    //@Authorized
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
+    public ResponseEntity<User> updateUser(@RequestBody User user) throws ResourceNotFoundException {
         return ResponseEntity.ok(this.service.save(user));
     }
 

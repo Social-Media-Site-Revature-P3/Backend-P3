@@ -35,6 +35,8 @@ public class SecurityController {
         return service.readByUserId(userId);
     }
 
+
+
     //Gets all security Questions (probably useless).
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)

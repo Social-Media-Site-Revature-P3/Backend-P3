@@ -46,6 +46,15 @@ public class Post {
 	@JsonIgnore
 	private List<Bookmark> bookmarks;
 
+	public Post(int postId, String text, String imageUrl, String title, LocalDateTime createDateTime, LocalDateTime updateDateTime) {
+		this.postId = postId;
+		this.text = text;
+		this.imageUrl = imageUrl;
+		this.title = title;
+		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
+	}
+
 	public Post() {
 	}
 

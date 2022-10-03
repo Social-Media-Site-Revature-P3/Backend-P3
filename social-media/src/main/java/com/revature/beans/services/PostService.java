@@ -60,8 +60,8 @@ public class PostService {
 		return this.postRepository.save(post);
 	}
 
-	public void createComment(Comment comment) {
-		this.postRepository.saveComment(comment.getCommentId(), comment.getPostId());
+	public Comment createComment(Comment comment) {
+		return this.postRepository.saveComment(comment.getCommentId(), comment.getPostId());
 	}
 
 	public void update(Integer postId, String image, String text, String title, Integer userId) {

@@ -2,7 +2,7 @@ package com.revature.beans.services;
 
 import com.revature.beans.repositories.PostRepository;
 import com.revature.beans.repositories.UserRepository;
-import com.revature.dtos.UserFullName;
+import com.revature.exceptions.ResourceNotFoundException;
 import com.revature.models.Post;
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,9 @@ public class UserService {
     public Optional<User> findByCredentials(String email, String password) {
         return this.userRepository.findByEmailAndPassword(email, password);
     }
+    public Optional<User> findByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
 
     public List<User> findByFullName(String firstName, String lastName) {
         return this.userRepository.findByFirstNameAndLastName(firstName, lastName);
@@ -40,7 +43,11 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User save(User user) {
+    public User save(User user) throws ResourceNotFoundException {
+        Optional<User> savedUser = userRepository.findByEmail(user.getEmail());
+        if(savedUser.isPresent()){
+            throw new ResourceNotFoundException("User already exist with given email: " + user.getEmail());
+        }
         return this.userRepository.save(user);
     }
 
