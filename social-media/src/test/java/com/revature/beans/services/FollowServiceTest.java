@@ -33,8 +33,9 @@ class FollowServiceTest {
         followList = Arrays.asList(
                 new Follow(44453, user, user1),
                 new Follow(78932, user1,user)
-        );    user = new User(39696,"user@gmail.com","password", "John", "Doe");
-        user1 = new User(39695,"user@gmail.com","password", "James", "Doe");
+        );
+        user = new User(39696,"user@gmail.com", "konjo", "password", "John", "Doe");
+        user1 = new User(39695,"user@gmail.com","konjo", "password", "James", "Doe");
     /* userList = Arrays.asList(
         new User(44453, "user@gmail.com", "password", "Jane", "Doe"),
         new User(39696,"user@gmail.com","password", "Adam", "Doe"),

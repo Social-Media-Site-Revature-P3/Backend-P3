@@ -1,6 +1,7 @@
 package com.revature.beans.services;
 
 import com.revature.beans.repositories.LikeRepository;
+import com.revature.beans.repositories.PostRepository;
 import com.revature.models.Like;
 import com.revature.models.Post;
 import com.revature.models.User;
@@ -29,13 +30,16 @@ class LikeServiceTest {
     @Mock
     private LikeRepository likeRepository;
 
+    @Mock
+    private PostRepository postRepository;
     @InjectMocks
     private LikeService likeService;
 
     private Like like;
     private User user;
     private Post post;
-    private List<Like> likes;
+    private List<Like> liked, disliked, likes;
+    //private List<List<Like>> listList;
 
     @BeforeEach
     public void setup(){
@@ -43,9 +47,18 @@ class LikeServiceTest {
         post = new Post(1,"text one","../src/img/avatar7.png",  "post one", LocalDateTime.now(), LocalDateTime.now());
         like = new Like(1, true, post, user);
         likes = Arrays.asList(
+                new Like(1, false, post, user),
+                new Like(2, true, post, user)
+        );
+        liked = Arrays.asList(
                 new Like(1, true, post, user),
                 new Like(2, true, post, user)
         );
+        disliked = Arrays.asList(
+                new Like(1, false, post, user),
+                new Like(2, false, post, user)
+        );
+        //listList = (Like) Arrays.asList(liked, disliked);
     }
 
     @DisplayName("Test for readByLikeId method")
@@ -61,8 +74,11 @@ class LikeServiceTest {
     @DisplayName("Test for readByPostId method")
     @Test
     void readByPostId() {
-        given(likeRepository.findByPost_PostId(1)).willReturn(likes);
-        List<Like> likeList = likeService.readByPostId(1);
+        int postId = 1;
+        given(likeRepository.findByLiked(postId)).willReturn(liked);
+        given(likeRepository.findByDisliked(postId)).willReturn(disliked);
+
+        List<List<Like>> likeList = likeService.readByPostId(postId);
 
         assertThat(likeList).isNotNull();
         assertThat(likeList.size()).isEqualTo(2);
@@ -71,8 +87,9 @@ class LikeServiceTest {
     @DisplayName("Test for readByUserId method")
     @Test
     void readByUserId() {
+        int userId = 1;
         given(likeRepository.findByUser_UserId(1)).willReturn(likes);
-        List<Like> likeList = likeService.readByUserId(1);
+        List<Like> likeList = likeService.readByUserId(userId);
 
         assertThat(likeList).isNotNull();
         assertThat(likeList.size()).isEqualTo(2);

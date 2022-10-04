@@ -26,7 +26,6 @@ import static org.mockito.BDDMockito.*;
 @ContextConfiguration(locations={"social-media:src/main/webapp/WEB-INF/application-context.xml"})
 public class BookmarkServiceTest {
 
-
     @Mock
     private BookmarkRepository bookmarkRepository;
 
@@ -44,18 +43,18 @@ public class BookmarkServiceTest {
     @BeforeEach
     public void setup() {
         user = new User(1, "kidu@bishaw.com", "konjo", "pass1", "It's me", "Kidist", "Bishaw", "../src/img/avatar7.png");
-        posts = Arrays.asList(
+//        posts = Arrays.asList(
+//                new Post(1,"text one","../src/img/avatar7.png",  "post one", LocalDateTime.now(), LocalDateTime.now(), posts,user,likes,bookmarks),
+//                new Post(2,"text two", "../src/img/avatar6.png", "post two", LocalDateTime.now(), LocalDateTime.now(),posts,user,likes,bookmarks),
+//                new Post(3,"text three", "../src/img/avatar5.png", "post three", LocalDateTime.now(), LocalDateTime.now(), posts,user,likes,bookmarks)
+//        );
 
-                new Post(1,"text one","../src/img/avatar7.png",  "post one", LocalDateTime.now(), LocalDateTime.now(), posts,user,likes,bookmarks),
-                new Post(2,"text two", "../src/img/avatar6.png", "post two", LocalDateTime.now(), LocalDateTime.now(),posts,user,likes,bookmarks),
-                new Post(3,"text three", "../src/img/avatar5.png", "post three", LocalDateTime.now(), LocalDateTime.now(), posts,user,likes,bookmarks)
-        );
-        //like = new Like(1, true, post, user);
         likes = Arrays.asList(
                 new Like(1, true, post, user),
                 new Like(2, true, post, user)
         );
-        post = new Post(1,"text one", "../src/img/avatar7.png", "post", LocalDateTime.now(), LocalDateTime.now(), posts,user,likes,bookmarks);
+        //Post(postId, text, imageUrl, title, createDateTime, updateDateTime)
+        post = new Post(1,"text one", "../src/img/avatar7.png", "post", LocalDateTime.now(), LocalDateTime.now());
         bookmark = new Bookmark(1, post, user);
         bookmarks = Arrays.asList(
                 new Bookmark(1, post, user),
