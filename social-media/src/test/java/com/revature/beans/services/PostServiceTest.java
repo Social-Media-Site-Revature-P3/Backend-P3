@@ -160,14 +160,6 @@ class PostServiceTest {
         assertThat(upsertPost.getText()).isEqualTo("setText from test");
     }
 
-    @DisplayName("for createComment method")
-    @Test
-    void createComment() {
-        given(postRepository.saveComment(1,1)) .willReturn(comment);
-        Comment savedComment = postService.createComment(comment);
-        assertThat(savedComment).isNotNull();
-    }
-
     @DisplayName("for update method")
     @Test
     void update() {

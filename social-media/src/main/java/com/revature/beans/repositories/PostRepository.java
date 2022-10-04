@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +37,7 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO posts_comments (comments_post_id, post_post_id) VALUES (:commentId, :postId);", nativeQuery = true)
-    Comment saveComment(@Param("commentId") Integer commentId, @Param("postId") Integer postId);
+    void saveComment(@Param("commentId") Integer commentId, @Param("postId") Integer postId);
 
     @Transactional
     @Modifying
