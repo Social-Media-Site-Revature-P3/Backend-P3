@@ -1,5 +1,6 @@
 package com.revature.beans.repositories;
 
+import com.revature.dtos.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.revature.models.Post;
@@ -9,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +35,7 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO posts_comments (comments_post_id, post_post_id) VALUES (:commentId, :postId);", nativeQuery = true)
-    void saveComment(@Param("commentId") Integer commentId, @Param("postId") Integer postId);
+    Comment saveComment(@Param("commentId") Integer commentId, @Param("postId") Integer postId);
 
     @Transactional
     @Modifying

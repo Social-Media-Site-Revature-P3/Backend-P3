@@ -23,6 +23,18 @@ public class User {
     private String aboutMe;
     private String firstName;
     private String lastName;
+
+    public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+    }
+
     private String profilePicture;
 
     @OneToMany(mappedBy = "user")
@@ -89,23 +101,13 @@ public class User {
         this.bookmarks = bookmarks;
     }
 
-    public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture) {
-        this.userId = userId;
+    public User(int userId, String email, String nickname, String password, String firstName, String lastName, String profilePicture) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
-        this.aboutMe = aboutMe;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePicture = profilePicture;
-    }
-
-    public User(int userId, String email, String nickname, String password, String firstName, String lastName) {
-        this.email = email;
-        this.nickname = nickname;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public int getUserId() {

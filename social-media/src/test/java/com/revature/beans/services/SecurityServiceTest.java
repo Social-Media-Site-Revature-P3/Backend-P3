@@ -1,6 +1,8 @@
 package com.revature.beans.services;
 
+import com.revature.beans.repositories.PostRepository;
 import com.revature.beans.repositories.SecurityQuestionRepository;
+import com.revature.beans.repositories.UserRepository;
 import com.revature.models.SecurityQuestion;
 import com.revature.models.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,13 +21,13 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith({MockitoExtension.class})
-@RunWith(SpringRunner.class)
 @ContextConfiguration(locations={"social-media:src/main/webapp/WEB-INF/application-context.xml"})
 class SecurityServiceTest {
 
@@ -34,6 +36,11 @@ class SecurityServiceTest {
 
     @InjectMocks
     private SecurityService securityService;
+
+    @Mock
+    private UserRepository userRepository;
+    @InjectMocks
+    private UserService userService;
 
     private SecurityQuestion securityQuestion;
 
@@ -53,7 +60,6 @@ class SecurityServiceTest {
                 new SecurityQuestion(2, "What city were you born in?", "Queens", user),
                 new SecurityQuestion(3, "What is your mother's maiden name?", "Santana", user)
         );
-
     }
 
     @DisplayName("JUnit test for readAllSecurityQuestions method")
@@ -72,11 +78,11 @@ class SecurityServiceTest {
     @Test
     public void readByUserId() {
 
-        given(securityQuestionRepository.findByUser_UserId(1)).willReturn(List.of(securityQuestion));
+        given(securityQuestionRepository.findByUser_UserId(1)).willReturn(securityQuestions);
 
         List <SecurityQuestion> listOfQuestions = securityService.readByUserId(user.getUserId());
 
-        assertThat(listOfQuestions).isNotNull();
+        assertThat(listOfQuestions.size()).isEqualTo(3);
     }
     @DisplayName("JUnit test for findSecurityQuestion method")
     @Test
@@ -97,7 +103,16 @@ class SecurityServiceTest {
         SecurityQuestion securityQuestion1 = securityService.readByQuestionAndAnswer(securityQuestion, user.getUserId());
 
         assertThat(securityQuestion1).isNotNull();
+    }
 
+    @DisplayName("JUnit test for readByQuestionAndAnswer")
+    @Test
+    public void readByQuestionAndAnswer_ThrowsException() throws Exception {
+        given(securityQuestionRepository.findByUser_UserId(1)).willReturn(List.of(securityQuestion));
+
+        assertThrows(Exception.class, () -> {
+            SecurityQuestion securityQuestion1 = securityService.readByQuestionAndAnswer(securityQuestions.get(2), user.getUserId());
+        });
     }
 
     @DisplayName("JUnit testing for createSecurityQuestion method")
@@ -117,7 +132,7 @@ class SecurityServiceTest {
         securityQuestion.setQuestion("What is your favorite color?");
         securityQuestion.setAnswer("Yellow");
 
-        SecurityQuestion updatedSecurityQuestion = securityService.createSecurityQuestion(securityQuestion);
+        SecurityQuestion updatedSecurityQuestion = securityService.updateSecurityQuestion(securityQuestion);
 
         assertThat(updatedSecurityQuestion.getQuestion()).isEqualTo("What is your favorite color?");
         assertThat(updatedSecurityQuestion.getAnswer()).isEqualTo("Yellow");

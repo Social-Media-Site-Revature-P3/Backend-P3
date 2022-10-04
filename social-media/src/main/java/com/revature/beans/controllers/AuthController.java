@@ -32,7 +32,6 @@ public class AuthController {
         }
 
         session.setAttribute("user", optional.get());
-        System.out.println(session);
 
         return ResponseEntity.ok(optional.get());
     }
@@ -51,8 +50,8 @@ public class AuthController {
                 registerRequest.getNickname(),
                 registerRequest.getPassword(),
                 registerRequest.getFirstName(),
-                registerRequest.getLastName());
-
+                registerRequest.getLastName(),
+                registerRequest.getPicture());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
     }
