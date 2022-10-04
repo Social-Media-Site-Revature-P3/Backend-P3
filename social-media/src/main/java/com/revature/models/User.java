@@ -100,12 +100,13 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    public User(int userId, String email, String nickname, String password, String firstName, String lastName) {
+    public User(int userId, String email, String nickname, String password, String firstName, String lastName, String profilePicture) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.profilePicture = profilePicture;
     }
 
     public int getUserId() {

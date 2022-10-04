@@ -62,8 +62,8 @@ public class SecurityController {
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public void updateSecurityQuestion(@RequestBody SecurityQuestion securityQuestion) {
-        service.updateSecurityQuestion(securityQuestion);
+    public SecurityQuestion updateSecurityQuestion(@RequestBody SecurityQuestion securityQuestion) {
+        return service.updateSecurityQuestion(securityQuestion);
     }
 
     @RequestMapping(value = "/{pastOrderId}", method = RequestMethod.DELETE)

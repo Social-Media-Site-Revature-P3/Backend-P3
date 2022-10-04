@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.times;
@@ -71,11 +72,11 @@ class SecurityServiceTest {
     @Test
     public void readByUserId() {
 
-        given(securityQuestionRepository.findByUser_UserId(1)).willReturn(List.of(securityQuestion));
+        given(securityQuestionRepository.findByUser_UserId(1)).willReturn(securityQuestions);
 
         List <SecurityQuestion> listOfQuestions = securityService.readByUserId(user.getUserId());
 
-        assertThat(listOfQuestions).isNotNull();
+        assertThat(listOfQuestions.size()).isEqualTo(3);
     }
     @DisplayName("JUnit test for findSecurityQuestion method")
     @Test
@@ -96,7 +97,16 @@ class SecurityServiceTest {
         SecurityQuestion securityQuestion1 = securityService.readByQuestionAndAnswer(securityQuestion, user.getUserId());
 
         assertThat(securityQuestion1).isNotNull();
+    }
 
+    @DisplayName("JUnit test for readByQuestionAndAnswer")
+    @Test
+    public void readByQuestionAndAnswer_ThrowsException() throws Exception {
+        given(securityQuestionRepository.findByUser_UserId(1)).willReturn(List.of(securityQuestion));
+
+        assertThrows(Exception.class, () -> {
+            SecurityQuestion securityQuestion1 = securityService.readByQuestionAndAnswer(securityQuestions.get(2), user.getUserId());
+        });
     }
 
     @DisplayName("JUnit testing for createSecurityQuestion method")
@@ -116,7 +126,7 @@ class SecurityServiceTest {
         securityQuestion.setQuestion("What is your favorite color?");
         securityQuestion.setAnswer("Yellow");
 
-        SecurityQuestion updatedSecurityQuestion = securityService.createSecurityQuestion(securityQuestion);
+        SecurityQuestion updatedSecurityQuestion = securityService.updateSecurityQuestion(securityQuestion);
 
         assertThat(updatedSecurityQuestion.getQuestion()).isEqualTo("What is your favorite color?");
         assertThat(updatedSecurityQuestion.getAnswer()).isEqualTo("Yellow");
