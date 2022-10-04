@@ -66,4 +66,9 @@ public class FollowController {
     public void deleteFollow(@PathVariable Integer followId) {
         this.service.deleteFollow(followId);
     }
+
+    @DeleteMapping("/followedId/{followedId}/followerId/{followerId}")
+    public void deleteFollowByFollowedIdAndFollowerId(@PathVariable Integer followedId, Integer followerId) {
+        this.service.deleteFollowByFollowedIdAndFollowerId(followedId, followerId);
+    }
 }
