@@ -40,8 +40,4 @@ public class FollowService {
     public void deleteFollow(Integer followId) {
         this.followRepository.deleteById(followId);
     }
-
-    public void deleteFollowByFollowedIdAndFollowerId(Integer followedId, Integer followerId) {
-        this.followRepository.deleteFollowByFollowedIdAndFollowerId(followedId, followerId);
-    }
 }
