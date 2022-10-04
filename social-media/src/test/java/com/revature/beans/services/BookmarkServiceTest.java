@@ -19,13 +19,13 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import org.springframework.test.context.ContextConfiguration;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class BookmarkServiceTest {
+@ContextConfiguration(locations={"social-media:src/main/webapp/WEB-INF/application-context.xml"})
+public class BookmarkServiceTest {
+
 
     @Mock
     private BookmarkRepository bookmarkRepository;
@@ -128,3 +128,4 @@ class BookmarkServiceTest {
         verify(bookmarkRepository, times(1)).deleteById(bookmarkId);
     }
 }
+

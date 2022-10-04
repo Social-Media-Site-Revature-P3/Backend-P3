@@ -1,9 +1,12 @@
 package com.revature;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@ContextConfiguration(locations = {"classpath:WEB-INF/application-context.xml"})
 class SocialMediaApplicationTests {
 
 	@Test

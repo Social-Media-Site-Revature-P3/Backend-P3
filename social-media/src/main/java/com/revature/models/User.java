@@ -4,11 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.awt.print.Book;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +17,7 @@ public class User {
     private int userId;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String nickname;
     private String password;
     private String aboutMe;
@@ -73,7 +71,7 @@ public class User {
 
 
     public User(int userId, String email, String aboutMe, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
-        this.aboutMe=aboutMe;
+        this.aboutMe = aboutMe;
         this.userId = userId;
         this.email = email;
         this.nickname = nickname;
@@ -88,7 +86,6 @@ public class User {
         this.followed = followed;
         this.bookmarks = bookmarks;
     }
-
     public User(String email, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
         this.email = email;
         this.nickname = nickname;
@@ -104,8 +101,20 @@ public class User {
         this.bookmarks = bookmarks;
     }
 
-    public User(int userId,String email, String password, String firstName, String lastName) {
+    public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture) {
+        this.userId = userId;
         this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+    }
+
+    public User(int userId, String email, String nickname, String password, String firstName, String lastName) {
+        this.email = email;
+        this.nickname = nickname;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
