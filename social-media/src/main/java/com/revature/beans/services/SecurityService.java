@@ -23,6 +23,7 @@ public class SecurityService {
     public List<SecurityQuestion> readByUserId(Integer userId) {
         return SecurityQuestionRepository.findByUser_UserId(userId);
     }
+
     public Optional<SecurityQuestion> findSecurityQuestion(Integer id) {
         return SecurityQuestionRepository.findById(id);
     }
@@ -40,8 +41,8 @@ public class SecurityService {
     public SecurityQuestion createSecurityQuestion(SecurityQuestion newSecurityQuestion) {
         return SecurityQuestionRepository.save(newSecurityQuestion);
     }
-    public void updateSecurityQuestion(SecurityQuestion updateSecurityQuestion) {
-        SecurityQuestionRepository.save(updateSecurityQuestion);
+    public SecurityQuestion updateSecurityQuestion(SecurityQuestion updateSecurityQuestion) {
+        return SecurityQuestionRepository.save(updateSecurityQuestion);
     }
     public void deleteById(Integer id) {
         SecurityQuestionRepository.deleteById(id);

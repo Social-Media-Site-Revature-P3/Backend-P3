@@ -22,4 +22,5 @@ public class AuthService {
     public User register(User user) throws ResourceNotFoundException {
         return userService.save(user);
     }
+
 }

@@ -1,6 +1,8 @@
 package com.revature.beans.services;
 
+import com.revature.beans.repositories.PostRepository;
 import com.revature.beans.repositories.SecurityQuestionRepository;
+import com.revature.beans.repositories.UserRepository;
 import com.revature.models.SecurityQuestion;
 import com.revature.models.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +36,11 @@ class SecurityServiceTest {
     @InjectMocks
     private SecurityService securityService;
 
+    @Mock
+    private UserRepository userRepository;
+    @InjectMocks
+    private UserService userService;
+
     private SecurityQuestion securityQuestion;
 
     private List<SecurityQuestion> securityQuestions;
@@ -52,7 +59,6 @@ class SecurityServiceTest {
                 new SecurityQuestion(2, "What city were you born in?", "Queens", user),
                 new SecurityQuestion(3, "What is your mother's maiden name?", "Santana", user)
         );
-
     }
 
     @DisplayName("JUnit test for readAllSecurityQuestions method")
