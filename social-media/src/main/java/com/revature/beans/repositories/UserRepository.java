@@ -16,8 +16,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmailAndPassword(String email, String password);
     Optional<User> findByEmail(String email);
 
-    Optional<User> findByEmail(String email);
-
     @Query(value="SELECT * FROM users u WHERE u.first_name ~* :firstName AND u.last_name ~* :lastName",nativeQuery = true)
     List<User> findByFirstNameLastName(String firstName, String lastName);
 
