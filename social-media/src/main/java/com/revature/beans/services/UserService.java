@@ -46,7 +46,9 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User save(User user){
+
+    // Validation check when registering user
+    public User save(User user) throws ResourceNotFoundException {
         Optional<User> savedUser = userRepository.findByEmail(user.getEmail());
 
         if(savedUser.isPresent()){
@@ -54,7 +56,7 @@ public class UserService {
         }
         return this.userRepository.save(user);
     }
-
+    
     public User update(User user){
         return this.userRepository.save(user);
     }
