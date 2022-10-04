@@ -23,6 +23,7 @@ public class SecurityService {
     public List<SecurityQuestion> readByUserId(Integer userId) {
         return SecurityQuestionRepository.findByUser_UserId(userId);
     }
+
     public Optional<SecurityQuestion> findSecurityQuestion(Integer id) {
         return SecurityQuestionRepository.findById(id);
     }

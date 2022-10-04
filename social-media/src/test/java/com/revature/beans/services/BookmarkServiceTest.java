@@ -2,6 +2,7 @@ package com.revature.beans.services;
 
 import com.revature.beans.repositories.BookmarkRepository;
 import com.revature.models.Bookmark;
+import com.revature.models.Like;
 import com.revature.models.Post;
 import com.revature.models.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,23 +12,26 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.awt.print.Book;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.test.context.ContextConfiguration;
 import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @ContextConfiguration(locations={"social-media:src/main/webapp/WEB-INF/application-context.xml"})
 public class BookmarkServiceTest {
+
 
     @Mock
     private BookmarkRepository bookmarkRepository;
@@ -35,17 +39,17 @@ public class BookmarkServiceTest {
     @InjectMocks
     private BookmarkService bookmarkService;
 
-    private Bookmark bookmark;
-    private List<Bookmark> bookmarks;
     private User user;
     private List<User> users;
     private Post post;
     private List<Post> posts;
+    private List<Like> likes;
+    private Bookmark bookmark;
+    private List<Bookmark> bookmarks;
 
     @BeforeEach
     public void setup() {
         user = new User(1, "kidu@bishaw.com", "konjo","pass1", "It's me", "Kidist", "Bishaw", "../src/img/avatar7.png");
-
         users = Arrays.asList(
                 new User(1, "kidu@bishaw.com", "konjo","pass1", "It's me", "Kidist", "Bishaw", "../src/img/avatar7.png"),
                 new User(2, "rebecca@gmail.com", "konjo", "pass2", "About Rebecca", "Rebecca", "Candelaria", "../src/img/avatar6.png"),
@@ -59,23 +63,26 @@ public class BookmarkServiceTest {
                 new Post(3, "this is the third post text", "Post image", "Post Title", false)
         );
 
+        user = new User(1, "kidu@bishaw.com", "konjo", "pass1", "It's me", "Kidist", "Bishaw", "../src/img/avatar7.png");
 
-        bookmark = new Bookmark(1, this.post, this.user);
+        //like = new Like(1, true, post, user);
+        likes = Arrays.asList(
+                new Like(1, true, post, user),
+                new Like(2, true, post, user)
+        );
+
+        bookmark = new Bookmark(1, post, user);
         bookmarks = Arrays.asList(
-                new Bookmark(1, posts.get(0), users.get(0)),
-                new Bookmark(2, posts.get(1), users.get(0)),
-                new Bookmark(3, posts.get(0), users.get(1)),
-                new Bookmark(4, posts.get(2), users.get(2))
+                new Bookmark(1, post, user),
+                new Bookmark(2, post, user)
         );
     }
-
-    @DisplayName("JUnit test for readByBookmarkId")
+    @DisplayName("for readByBookmarkId method")
     @Test
-    public void givenBookmarkId_whenFindByBookmarkId_thenReturnBookmarkObject() {
-        given(bookmarkRepository.findById(1)).willReturn(Optional.of(bookmark));
-
+    void readByBookmarkId() {
+        int bookmarkId = 1;
+        given(bookmarkRepository.findById(bookmarkId)).willReturn(Optional.of(bookmark));
         Bookmark savedBookmark = bookmarkService.readByBookmarkId(bookmark.getBookmarkId()).get();
-
         assertThat(savedBookmark).isNotNull();
     }
 
@@ -128,4 +135,54 @@ public class BookmarkServiceTest {
 
         verify(bookmarkRepository, times(1)).deleteById(1);
     }
+
+    @DisplayName("for readByPostId method")
+    @Test
+    void readByPostId() {
+        int postId = 1;
+        given(bookmarkRepository.findByPost_PostId(postId)).willReturn(bookmarks);
+
+        List<Bookmark> bookmarkList = bookmarkService.readByPostId(postId);
+
+        assertThat(bookmarkList).isNotNull();
+        assertThat(bookmarkList.size()).isEqualTo(2);
+
+    }
+
+    @DisplayName("for readByUserId method")
+    @Test
+    void readByUserId() {
+        int userId = 1;
+
+        given(bookmarkRepository.findByUser_UserId(userId)).willReturn(bookmarks);
+
+        List<Bookmark> bookmarkList = bookmarkService.readByUserId(userId);
+
+        assertThat(bookmarkList).isNotNull();
+        assertThat(bookmarkList.size()).isEqualTo(2);
+    }
+
+    @DisplayName("for readAll method")
+    @Test
+    void readAll() {
+        given(bookmarkRepository.findAll()).willReturn(bookmarks);
+
+        List <Bookmark> bookmarkList = bookmarkService.readAll();
+
+        assertThat(bookmarkList).isNotNull();
+        assertThat(bookmarkList.size()).isEqualTo(2);
+    }
+
+    @DisplayName("for deleteBookmark method")
+    @Test
+    void deleteBookmark() {
+        int bookmarkId = 1;
+
+        willDoNothing().given(bookmarkRepository).deleteById(bookmarkId);
+        bookmarkService.deleteBookmark(bookmarkId);
+
+        verify(bookmarkRepository, times(1)).deleteById(bookmarkId);
+
+    }
 }
+
