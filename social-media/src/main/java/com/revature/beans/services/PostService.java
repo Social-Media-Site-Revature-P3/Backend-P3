@@ -29,6 +29,14 @@ public class PostService {
 		return this.postRepository.findByUser_UserId(userId);
 	}
 
+	public List<Post> readByGroupId(Integer groupId) {
+		return this.postRepository.findByGroup_GroupId(groupId);
+	}
+
+	public List<Post> readByEventId(Integer eventId) {
+		return this.postRepository.findByEvent_EventId(eventId);
+	}
+
 	public List<Post> readByOriginalPost(Integer userId) {
 		return this.postRepository.findOriginalPost(userId);
 	}

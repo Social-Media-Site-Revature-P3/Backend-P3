@@ -24,6 +24,8 @@ public class Event {
     private String info;
     @Column(name = "invite_only")
     private boolean inviteOnly;
+
+    @Column(nullable = true)
     private boolean request;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)

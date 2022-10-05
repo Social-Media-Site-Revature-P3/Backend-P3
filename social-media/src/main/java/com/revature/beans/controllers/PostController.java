@@ -42,6 +42,16 @@ public class PostController {
         return ResponseEntity.ok(this.postService.readByUserId(userId));
     }
 
+    @GetMapping(value = "/group/{groupId}")
+    public ResponseEntity<List<Post>> getByGroupId(@PathVariable Integer groupId) {
+        return ResponseEntity.ok(this.postService.readByGroupId(groupId));
+    }
+
+    @GetMapping(value = "/event/{eventId}")
+    public ResponseEntity<List<Post>> getByEventId(@PathVariable Integer eventId) {
+        return ResponseEntity.ok(this.postService.readByEventId(eventId));
+    }
+
     //Gets Original Posts Only
     //@Authorized
     @GetMapping(value = "/post/{userId}")
