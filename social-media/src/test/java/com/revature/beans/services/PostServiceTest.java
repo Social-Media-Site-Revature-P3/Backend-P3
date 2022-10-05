@@ -54,14 +54,14 @@ class PostServiceTest {
                 new User(2, "rebecca@gmail.com", "konjo", "pass2", "About Rebecca", "Rebecca", "Candelaria", "../src/img/avatar6.png"),
                 new User(3, "Dayna@yahoo.com", "konjo", "pass3", "About Dayna", "Dayna", "Johns", "../src/img/avatar5.png")
         );
-        post = new Post(1,"text one", "../src/img/avatar7.png", "post", LocalDateTime.now(), LocalDateTime.now(), postList,user,likes,bookmarks);
-        //upost = new Post(1,"text one", "../src/img/avatar7.png", "post", user);
-        postList = Arrays.asList(
-
-                new Post(1,"text one","../src/img/avatar7.png",  "post one", LocalDateTime.now(), LocalDateTime.now(), postList,user,likes,bookmarks),
-                new Post(2,"text two", "../src/img/avatar6.png", "post two", LocalDateTime.now(), LocalDateTime.now(),postList,user,likes,bookmarks),
-                new Post(3,"text three", "../src/img/avatar5.png", "post three", LocalDateTime.now(), LocalDateTime.now(), postList,user,likes,bookmarks)
-        );
+//        post = new Post(1,"text one", "../src/img/avatar7.png", "post", LocalDateTime.now(), LocalDateTime.now(), postList,user,likes,bookmarks);
+//        //upost = new Post(1,"text one", "../src/img/avatar7.png", "post", user);
+//        postList = Arrays.asList(
+//
+//                new Post(1,"text one","../src/img/avatar7.png",  "post one", LocalDateTime.now(), LocalDateTime.now(), postList,user,likes,bookmarks),
+//                new Post(2,"text two", "../src/img/avatar6.png", "post two", LocalDateTime.now(), LocalDateTime.now(),postList,user,likes,bookmarks),
+//                new Post(3,"text three", "../src/img/avatar5.png", "post three", LocalDateTime.now(), LocalDateTime.now(), postList,user,likes,bookmarks)
+//        );
         like = new Like(1, true, post, user);
         likes = Arrays.asList(
                 new Like(1, true, post, user),

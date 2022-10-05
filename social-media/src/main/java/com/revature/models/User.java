@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -66,9 +68,65 @@ public class User {
     @JsonIgnore
     private List<Bookmark> bookmarks;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<UserEvent> events;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<EventRequest> eventRequests;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<UserGroup> groups;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<GroupRequest> groupRequests;
+
     public User() {
     }
 
+    public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks, List<UserEvent> events, List<EventRequest> eventRequests, List<UserGroup> groups, List<GroupRequest> groupRequests) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+        this.posts = posts;
+        this.securityQuestions = securityQuestions;
+        this.likes = likes;
+        this.following = following;
+        this.followed = followed;
+        this.bookmarks = bookmarks;
+        this.events = events;
+        this.eventRequests = eventRequests;
+        this.groups = groups;
+        this.groupRequests = groupRequests;
+    }
+
+    public User(String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks, List<UserEvent> events, List<EventRequest> eventRequests, List<UserGroup> groups, List<GroupRequest> groupRequests) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+        this.posts = posts;
+        this.securityQuestions = securityQuestions;
+        this.likes = likes;
+        this.following = following;
+        this.followed = followed;
+        this.bookmarks = bookmarks;
+        this.events = events;
+        this.eventRequests = eventRequests;
+        this.groups = groups;
+        this.groupRequests = groupRequests;
+    }
 
     public User(int userId, String email, String aboutMe, String nickname, String password, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks) {
         this.aboutMe = aboutMe;
@@ -222,17 +280,49 @@ public class User {
         this.bookmarks = bookmarks;
     }
 
+    public List<UserEvent> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<UserEvent> events) {
+        this.events = events;
+    }
+
+    public List<EventRequest> getEventRequests() {
+        return eventRequests;
+    }
+
+    public void setEventRequests(List<EventRequest> eventRequests) {
+        this.eventRequests = eventRequests;
+    }
+
+    public List<UserGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<UserGroup> groups) {
+        this.groups = groups;
+    }
+
+    public List<GroupRequest> getGroupRequests() {
+        return groupRequests;
+    }
+
+    public void setGroupRequests(List<GroupRequest> groupRequests) {
+        this.groupRequests = groupRequests;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && Objects.equals(email, user.email) && Objects.equals(nickname, user.nickname) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(profilePicture, user.profilePicture) && Objects.equals(posts, user.posts) && Objects.equals(securityQuestions, user.securityQuestions) && Objects.equals(likes, user.likes) && Objects.equals(following, user.following) && Objects.equals(followed, user.followed) && Objects.equals(bookmarks, user.bookmarks);
+        return userId == user.userId && Objects.equals(email, user.email) && Objects.equals(nickname, user.nickname) && Objects.equals(password, user.password) && Objects.equals(aboutMe, user.aboutMe) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(profilePicture, user.profilePicture) && Objects.equals(posts, user.posts) && Objects.equals(securityQuestions, user.securityQuestions) && Objects.equals(likes, user.likes) && Objects.equals(following, user.following) && Objects.equals(followed, user.followed) && Objects.equals(bookmarks, user.bookmarks) && Objects.equals(events, user.events) && Objects.equals(eventRequests, user.eventRequests) && Objects.equals(groups, user.groups) && Objects.equals(groupRequests, user.groupRequests);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, email, nickname, aboutMe, password, firstName, lastName, profilePicture, posts, securityQuestions, likes, following, followed, bookmarks);
+        return Objects.hash(userId, email, nickname, password, aboutMe, firstName, lastName, profilePicture, posts, securityQuestions, likes, following, followed, bookmarks, events, eventRequests, groups, groupRequests);
     }
 
     @Override
@@ -242,9 +332,9 @@ public class User {
                 ", email='" + email + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
+                ", aboutMe='" + aboutMe + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", aboutMe='" + aboutMe + '\'' +
                 ", profilePicture='" + profilePicture + '\'' +
                 '}';
     }

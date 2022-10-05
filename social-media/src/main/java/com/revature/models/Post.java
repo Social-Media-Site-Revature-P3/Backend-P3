@@ -47,6 +47,14 @@ public class Post {
 	@JsonIgnore
 	private List<Bookmark> bookmarks;
 
+	@ManyToOne
+	@JoinColumn(name = "group_id")
+	private Group group;
+
+	@ManyToOne
+	@JoinColumn(name = "event_id")
+	private Event event;
+
 	public Post(int postId, String text, String imageUrl, String title, LocalDateTime createDateTime, LocalDateTime updateDateTime) {
 		this.postId = postId;
 		this.text = text;
@@ -57,6 +65,37 @@ public class Post {
 	}
 
 	public Post() {
+	}
+
+	public Post(int postId, String text, String imageUrl, String title, boolean comment, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks, Group group, Event event) {
+		this.postId = postId;
+		this.text = text;
+		this.imageUrl = imageUrl;
+		this.title = title;
+		this.comment = comment;
+		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
+		this.comments = comments;
+		this.user = user;
+		this.likes = likes;
+		this.bookmarks = bookmarks;
+		this.group = group;
+		this.event = event;
+	}
+
+	public Post(String text, String imageUrl, String title, boolean comment, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks, Group group, Event event) {
+		this.text = text;
+		this.imageUrl = imageUrl;
+		this.title = title;
+		this.comment = comment;
+		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
+		this.comments = comments;
+		this.user = user;
+		this.likes = likes;
+		this.bookmarks = bookmarks;
+		this.group = group;
+		this.event = event;
 	}
 
 	public Post(int postId, String text, String imageUrl, String title, boolean comment, LocalDateTime createDateTime, LocalDateTime updateDateTime, List<Post> comments, User user, List<Like> likes, List<Bookmark> bookmarks) {
@@ -182,17 +221,33 @@ public class Post {
 		this.bookmarks = bookmarks;
 	}
 
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Post post = (Post) o;
-		return postId == post.postId && comment == post.comment && Objects.equals(text, post.text) && Objects.equals(imageUrl, post.imageUrl) && Objects.equals(title, post.title) && Objects.equals(createDateTime, post.createDateTime) && Objects.equals(updateDateTime, post.updateDateTime) && Objects.equals(comments, post.comments) && Objects.equals(user, post.user) && Objects.equals(likes, post.likes) && Objects.equals(bookmarks, post.bookmarks);
+		return postId == post.postId && comment == post.comment && Objects.equals(text, post.text) && Objects.equals(imageUrl, post.imageUrl) && Objects.equals(title, post.title) && Objects.equals(createDateTime, post.createDateTime) && Objects.equals(updateDateTime, post.updateDateTime) && Objects.equals(comments, post.comments) && Objects.equals(user, post.user) && Objects.equals(likes, post.likes) && Objects.equals(bookmarks, post.bookmarks) && Objects.equals(group, post.group) && Objects.equals(event, post.event);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(postId, text, imageUrl, title, comment, createDateTime, updateDateTime, comments, user, likes, bookmarks);
+		return Objects.hash(postId, text, imageUrl, title, comment, createDateTime, updateDateTime, comments, user, likes, bookmarks, group, event);
 	}
 
 	@Override
@@ -209,6 +264,8 @@ public class Post {
 				", user=" + user +
 				", likes=" + likes +
 				", bookmarks=" + bookmarks +
+				", group=" + group +
+				", event=" + event +
 				'}';
 	}
 }
