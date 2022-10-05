@@ -17,10 +17,12 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
     private int groupId;
+    private String picture;
     private String name;
     private String about;
     @Column(name = "invite_only")
     private boolean inviteOnly;
+    private boolean request;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -38,28 +40,38 @@ public class Group {
     @JsonIgnore
     private List<Event> events;
 
+    @OneToMany(mappedBy = "group")
+    @JsonIgnore
+    private List<GroupInvite> groupInvites;
+
     public Group() {
     }
 
-    public Group(int groupId, String name, String about, boolean inviteOnly, List<UserGroup> groups, List<Post> posts, List<GroupRequest> groupRequests, List<Event> events) {
+    public Group(int groupId, String picture, String name, String about, boolean inviteOnly, boolean request, List<UserGroup> groups, List<Post> posts, List<GroupRequest> groupRequests, List<Event> events, List<GroupInvite> groupInvites) {
         this.groupId = groupId;
+        this.picture = picture;
         this.name = name;
         this.about = about;
         this.inviteOnly = inviteOnly;
+        this.request = request;
         this.groups = groups;
         this.posts = posts;
         this.groupRequests = groupRequests;
         this.events = events;
+        this.groupInvites = groupInvites;
     }
 
-    public Group(String name, String about, boolean inviteOnly, List<UserGroup> groups, List<Post> posts, List<GroupRequest> groupRequests, List<Event> events) {
+    public Group(String picture, String name, String about, boolean inviteOnly, boolean request, List<UserGroup> groups, List<Post> posts, List<GroupRequest> groupRequests, List<Event> events, List<GroupInvite> groupInvites) {
+        this.picture = picture;
         this.name = name;
         this.about = about;
         this.inviteOnly = inviteOnly;
+        this.request = request;
         this.groups = groups;
         this.posts = posts;
         this.groupRequests = groupRequests;
         this.events = events;
+        this.groupInvites = groupInvites;
     }
 
     public int getGroupId() {
@@ -68,6 +80,14 @@ public class Group {
 
     public void setGroupId(int groupId) {
         this.groupId = groupId;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getName() {
@@ -126,30 +146,49 @@ public class Group {
         this.events = events;
     }
 
+    public List<GroupInvite> getGroupInvites() {
+        return groupInvites;
+    }
+
+    public void setGroupInvites(List<GroupInvite> groupInvites) {
+        this.groupInvites = groupInvites;
+    }
+
+    public boolean isRequest() {
+        return request;
+    }
+
+    public void setRequest(boolean request) {
+        this.request = request;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Group group = (Group) o;
-        return groupId == group.groupId && inviteOnly == group.inviteOnly && Objects.equals(name, group.name) && Objects.equals(about, group.about) && Objects.equals(groups, group.groups) && Objects.equals(posts, group.posts) && Objects.equals(groupRequests, group.groupRequests) && Objects.equals(events, group.events);
+        return groupId == group.groupId && inviteOnly == group.inviteOnly && request == group.request && Objects.equals(picture, group.picture) && Objects.equals(name, group.name) && Objects.equals(about, group.about) && Objects.equals(groups, group.groups) && Objects.equals(posts, group.posts) && Objects.equals(groupRequests, group.groupRequests) && Objects.equals(events, group.events) && Objects.equals(groupInvites, group.groupInvites);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(groupId, name, about, inviteOnly, groups, posts, groupRequests, events);
+        return Objects.hash(groupId, picture, name, about, inviteOnly, request, groups, posts, groupRequests, events, groupInvites);
     }
 
     @Override
     public String toString() {
         return "Group{" +
                 "groupId=" + groupId +
+                ", picture='" + picture + '\'' +
                 ", name='" + name + '\'' +
                 ", about='" + about + '\'' +
                 ", inviteOnly=" + inviteOnly +
+                ", request=" + request +
                 ", groups=" + groups +
                 ", posts=" + posts +
                 ", groupRequests=" + groupRequests +
                 ", events=" + events +
+                ", groupInvites=" + groupInvites +
                 '}';
     }
 }

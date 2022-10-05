@@ -17,12 +17,14 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
     private int eventId;
+    private String picture;
     private String date;
     private String time;
     private String name;
     private String info;
     @Column(name = "invite_only")
     private boolean inviteOnly;
+    private boolean request;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -40,32 +42,42 @@ public class Event {
     @JoinColumn(name = "group_id")
     private Group group;
 
+    @OneToMany(mappedBy = "event")
+    @JsonIgnore
+    private List<EventInvite> eventInvites;
+
     public Event() {
     }
 
-    public Event(int eventId, String date, String time, String name, String info, boolean inviteOnly, List<UserEvent> events, List<Post> posts, List<EventRequest> eventRequests, Group group) {
+    public Event(int eventId, String picture, String date, String time, String name, String info, boolean inviteOnly, boolean request, List<UserEvent> events, List<Post> posts, List<EventRequest> eventRequests, Group group, List<EventInvite> eventInvites) {
         this.eventId = eventId;
+        this.picture = picture;
         this.date = date;
         this.time = time;
         this.name = name;
         this.info = info;
         this.inviteOnly = inviteOnly;
+        this.request = request;
         this.events = events;
         this.posts = posts;
         this.eventRequests = eventRequests;
         this.group = group;
+        this.eventInvites = eventInvites;
     }
 
-    public Event(String date, String time, String name, String info, boolean inviteOnly, List<UserEvent> events, List<Post> posts, List<EventRequest> eventRequests, Group group) {
+    public Event(String picture, String date, String time, String name, String info, boolean inviteOnly, boolean request, List<UserEvent> events, List<Post> posts, List<EventRequest> eventRequests, Group group, List<EventInvite> eventInvites) {
+        this.picture = picture;
         this.date = date;
         this.time = time;
         this.name = name;
         this.info = info;
         this.inviteOnly = inviteOnly;
+        this.request = request;
         this.events = events;
         this.posts = posts;
         this.eventRequests = eventRequests;
         this.group = group;
+        this.eventInvites = eventInvites;
     }
 
     public int getEventId() {
@@ -74,6 +86,14 @@ public class Event {
 
     public void setEventId(int eventId) {
         this.eventId = eventId;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getDate() {
@@ -148,32 +168,51 @@ public class Event {
         this.group = group;
     }
 
+    public List<EventInvite> getEventInvites() {
+        return eventInvites;
+    }
+
+    public void setEventInvites(List<EventInvite> eventInvites) {
+        this.eventInvites = eventInvites;
+    }
+
+    public boolean isRequest() {
+        return request;
+    }
+
+    public void setRequest(boolean request) {
+        this.request = request;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return eventId == event.eventId && inviteOnly == event.inviteOnly && Objects.equals(date, event.date) && Objects.equals(time, event.time) && Objects.equals(name, event.name) && Objects.equals(info, event.info) && Objects.equals(events, event.events) && Objects.equals(posts, event.posts) && Objects.equals(eventRequests, event.eventRequests) && Objects.equals(group, event.group);
+        return eventId == event.eventId && inviteOnly == event.inviteOnly && request == event.request && Objects.equals(picture, event.picture) && Objects.equals(date, event.date) && Objects.equals(time, event.time) && Objects.equals(name, event.name) && Objects.equals(info, event.info) && Objects.equals(events, event.events) && Objects.equals(posts, event.posts) && Objects.equals(eventRequests, event.eventRequests) && Objects.equals(group, event.group) && Objects.equals(eventInvites, event.eventInvites);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(eventId, date, time, name, info, inviteOnly, events, posts, eventRequests, group);
+        return Objects.hash(eventId, picture, date, time, name, info, inviteOnly, request, events, posts, eventRequests, group, eventInvites);
     }
 
     @Override
     public String toString() {
         return "Event{" +
                 "eventId=" + eventId +
+                ", picture='" + picture + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 ", name='" + name + '\'' +
                 ", info='" + info + '\'' +
                 ", inviteOnly=" + inviteOnly +
+                ", request=" + request +
                 ", events=" + events +
                 ", posts=" + posts +
                 ", eventRequests=" + eventRequests +
                 ", group=" + group +
+                ", eventInvites=" + eventInvites +
                 '}';
     }
 }

@@ -20,6 +20,10 @@ public interface PostRepository extends JpaRepository<Post, Integer>{
 
     List<Post> findByUser_UserId(Integer userId);
 
+    List<Post> findByGroup_GroupId(Integer groupId);
+
+    List<Post> findByEvent_EventId(Integer eventId);
+
     @Query(value = "SELECT * FROM posts WHERE user_id = :userId AND comment = false", nativeQuery = true)
     List<Post> findOriginalPost(Integer userId);
 

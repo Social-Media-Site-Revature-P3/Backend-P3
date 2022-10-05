@@ -84,7 +84,72 @@ public class User {
     @JsonIgnore
     private List<GroupRequest> groupRequests;
 
+    @OneToMany(mappedBy = "eventInviter")
+    @JsonIgnore
+    private List<EventInvite> eventInvites;
+
+    @OneToMany(mappedBy = "newEventMember")
+    @JsonIgnore
+    private List<EventInvite> newEventMembers;
+
+    @OneToMany(mappedBy = "groupInviter")
+    @JsonIgnore
+    private List<GroupInvite> groupInvites;
+
+    @OneToMany(mappedBy = "newGroupMember")
+    @JsonIgnore
+    private List<GroupInvite> newGroupMembers;
+
     public User() {
+    }
+
+    public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks, List<UserEvent> events, List<EventRequest> eventRequests, List<UserGroup> groups, List<GroupRequest> groupRequests, List<EventInvite> eventInvites, List<EventInvite> newEventMembers, List<GroupInvite> groupInvites, List<GroupInvite> newGroupMembers) {
+        this.userId = userId;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+        this.posts = posts;
+        this.securityQuestions = securityQuestions;
+        this.likes = likes;
+        this.following = following;
+        this.followed = followed;
+        this.bookmarks = bookmarks;
+        this.events = events;
+        this.eventRequests = eventRequests;
+        this.groups = groups;
+        this.groupRequests = groupRequests;
+        this.eventInvites = eventInvites;
+        this.newEventMembers = newEventMembers;
+        this.groupInvites = groupInvites;
+        this.newGroupMembers = newGroupMembers;
+    }
+
+    public User(String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks, List<UserEvent> events, List<EventRequest> eventRequests, List<UserGroup> groups, List<GroupRequest> groupRequests, List<EventInvite> eventInvites, List<EventInvite> newEventMembers, List<GroupInvite> groupInvites, List<GroupInvite> newGroupMembers) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.aboutMe = aboutMe;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePicture = profilePicture;
+        this.posts = posts;
+        this.securityQuestions = securityQuestions;
+        this.likes = likes;
+        this.following = following;
+        this.followed = followed;
+        this.bookmarks = bookmarks;
+        this.events = events;
+        this.eventRequests = eventRequests;
+        this.groups = groups;
+        this.groupRequests = groupRequests;
+        this.eventInvites = eventInvites;
+        this.newEventMembers = newEventMembers;
+        this.groupInvites = groupInvites;
+        this.newGroupMembers = newGroupMembers;
     }
 
     public User(int userId, String email, String nickname, String password, String aboutMe, String firstName, String lastName, String profilePicture, List<Post> posts, List<SecurityQuestion> securityQuestions, List<Like> likes, List<Follow> following, List<Follow> followed, List<Bookmark> bookmarks, List<UserEvent> events, List<EventRequest> eventRequests, List<UserGroup> groups, List<GroupRequest> groupRequests) {
@@ -312,17 +377,49 @@ public class User {
         this.groupRequests = groupRequests;
     }
 
+    public List<EventInvite> getEventInvites() {
+        return eventInvites;
+    }
+
+    public void setEventInvites(List<EventInvite> eventInvites) {
+        this.eventInvites = eventInvites;
+    }
+
+    public List<EventInvite> getNewEventMembers() {
+        return newEventMembers;
+    }
+
+    public void setNewEventMembers(List<EventInvite> newEventMembers) {
+        this.newEventMembers = newEventMembers;
+    }
+
+    public List<GroupInvite> getGroupInvites() {
+        return groupInvites;
+    }
+
+    public void setGroupInvites(List<GroupInvite> groupInvites) {
+        this.groupInvites = groupInvites;
+    }
+
+    public List<GroupInvite> getNewGroupMembers() {
+        return newGroupMembers;
+    }
+
+    public void setNewGroupMembers(List<GroupInvite> newGroupMembers) {
+        this.newGroupMembers = newGroupMembers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && Objects.equals(email, user.email) && Objects.equals(nickname, user.nickname) && Objects.equals(password, user.password) && Objects.equals(aboutMe, user.aboutMe) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(profilePicture, user.profilePicture) && Objects.equals(posts, user.posts) && Objects.equals(securityQuestions, user.securityQuestions) && Objects.equals(likes, user.likes) && Objects.equals(following, user.following) && Objects.equals(followed, user.followed) && Objects.equals(bookmarks, user.bookmarks) && Objects.equals(events, user.events) && Objects.equals(eventRequests, user.eventRequests) && Objects.equals(groups, user.groups) && Objects.equals(groupRequests, user.groupRequests);
+        return userId == user.userId && Objects.equals(email, user.email) && Objects.equals(nickname, user.nickname) && Objects.equals(password, user.password) && Objects.equals(aboutMe, user.aboutMe) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(profilePicture, user.profilePicture) && Objects.equals(posts, user.posts) && Objects.equals(securityQuestions, user.securityQuestions) && Objects.equals(likes, user.likes) && Objects.equals(following, user.following) && Objects.equals(followed, user.followed) && Objects.equals(bookmarks, user.bookmarks) && Objects.equals(events, user.events) && Objects.equals(eventRequests, user.eventRequests) && Objects.equals(groups, user.groups) && Objects.equals(groupRequests, user.groupRequests) && Objects.equals(eventInvites, user.eventInvites) && Objects.equals(newEventMembers, user.newEventMembers) && Objects.equals(groupInvites, user.groupInvites) && Objects.equals(newGroupMembers, user.newGroupMembers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, email, nickname, password, aboutMe, firstName, lastName, profilePicture, posts, securityQuestions, likes, following, followed, bookmarks, events, eventRequests, groups, groupRequests);
+        return Objects.hash(userId, email, nickname, password, aboutMe, firstName, lastName, profilePicture, posts, securityQuestions, likes, following, followed, bookmarks, events, eventRequests, groups, groupRequests, eventInvites, newEventMembers, groupInvites, newGroupMembers);
     }
 
     @Override
