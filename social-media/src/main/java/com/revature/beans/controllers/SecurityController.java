@@ -35,6 +35,8 @@ public class SecurityController {
         return service.readByUserId(userId);
     }
 
+
+
     //Gets all security Questions (probably useless).
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -62,8 +64,8 @@ public class SecurityController {
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public void updateSecurityQuestion(@RequestBody SecurityQuestion securityQuestion) {
-        service.updateSecurityQuestion(securityQuestion);
+    public SecurityQuestion updateSecurityQuestion(@RequestBody SecurityQuestion securityQuestion) {
+        return service.updateSecurityQuestion(securityQuestion);
     }
 
     @RequestMapping(value = "/{pastOrderId}", method = RequestMethod.DELETE)

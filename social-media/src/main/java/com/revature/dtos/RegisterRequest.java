@@ -8,16 +8,18 @@ public class RegisterRequest {
     private String firstName;
     private String lastName;
     private String nickname;
+    private String picture;
 
     public RegisterRequest() {
     }
 
-    public RegisterRequest(String email, String password, String firstName, String lastName, String nickname) {
+    public RegisterRequest(String email, String password, String firstName, String lastName, String nickname, String picture) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
+        this.picture = picture;
     }
 
     public String getEmail() {
@@ -60,17 +62,25 @@ public class RegisterRequest {
         this.nickname = nickname;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RegisterRequest that = (RegisterRequest) o;
-        return Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(nickname, that.nickname);
+        return Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(nickname, that.nickname) && Objects.equals(picture, that.picture);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, password, firstName, lastName, nickname);
+        return Objects.hash(email, password, firstName, lastName, nickname, picture);
     }
 
     @Override
@@ -81,6 +91,7 @@ public class RegisterRequest {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", nickname='" + nickname + '\'' +
+                ", picture='" + picture + '\'' +
                 '}';
     }
 }

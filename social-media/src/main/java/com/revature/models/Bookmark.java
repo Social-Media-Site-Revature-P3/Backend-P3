@@ -34,6 +34,7 @@ public class Bookmark {
         this.user = user;
     }
 
+
     public int getBookmarkId() {
         return bookmarkId;
     }

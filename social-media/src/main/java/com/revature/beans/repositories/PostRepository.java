@@ -1,5 +1,6 @@
 package com.revature.beans.repositories;
 
+import com.revature.dtos.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.revature.models.Post;
@@ -9,7 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,10 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Integer>{
 
     List<Post> findByUser_UserId(Integer userId);
+
+    List<Post> findByGroup_GroupId(Integer groupId);
+
+    List<Post> findByEvent_EventId(Integer eventId);
 
     @Query(value = "SELECT * FROM posts WHERE user_id = :userId AND comment = false", nativeQuery = true)
     List<Post> findOriginalPost(Integer userId);

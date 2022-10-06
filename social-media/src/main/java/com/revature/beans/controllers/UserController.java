@@ -22,6 +22,17 @@ public class UserController {
         this.service = userService;
     }
 
+    @GetMapping(value = "/email/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+        Optional<User> optionalUser = service.findByEmail(email);
+        try {
+            optionalUser.isPresent();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(optionalUser.get());
+    }
+
     @GetMapping(value = "/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Integer userId) {
         Optional<User> optionalUser = service.findByUserId(userId);
@@ -35,6 +46,7 @@ public class UserController {
 
     @PostMapping(value = "/full-name")
     public ResponseEntity<List<User>> getUsersByFullName(@RequestBody UserFullName name) {
+        System.out.println("made it here");
         return ResponseEntity.ok(this.service.findByFullName("^[\\s\\S]*"+name.getFirstName()+"[\\s\\S]*$", "^[\\s\\S]*"+name.getLastName()+"[\\s\\S]*$"));
     }
 
@@ -51,8 +63,8 @@ public class UserController {
 
     //@Authorized
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user) throws ResourceNotFoundException {
-        return ResponseEntity.ok(this.service.save(user));
+    public ResponseEntity<User> updateUser(@RequestBody User user){
+        return ResponseEntity.ok(this.service.update(user));
     }
 
     @DeleteMapping(value = "/{userId}")

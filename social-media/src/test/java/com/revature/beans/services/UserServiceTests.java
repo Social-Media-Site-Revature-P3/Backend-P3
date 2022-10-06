@@ -1,22 +1,16 @@
 package com.revature.beans.services;
 
 import com.revature.beans.repositories.UserRepository;
-import com.revature.beans.services.UserService;
 import com.revature.exceptions.ResourceNotFoundException;
-import com.revature.models.SecurityQuestion;
 import com.revature.models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,12 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-@RunWith(SpringRunner.class)
+@ExtendWith({MockitoExtension.class})
 @ContextConfiguration(locations={"social-media:src/main/webapp/WEB-INF/application-context.xml"})
 public class UserServiceTests {
 
@@ -41,16 +32,14 @@ public class UserServiceTests {
     private User user;
     private List<User> users;
 
-    private List<SecurityQuestion> securityQuestions;
 
     @BeforeEach
     public void setup(){
-
         user = new User(1, "kidu@bishaw.com", "konjo","pass1", "It's me", "Kidist", "Bishaw", "../src/img/avatar7.png");
         users = Arrays.asList(
                 new User(1, "kidu@bishaw.com", "konjo","pass1", "It's me", "Kidist", "Bishaw", "../src/img/avatar7.png"),
                 new User(2, "rebecca@gmail.com", "konjo", "pass2", "About Rebecca", "Rebecca", "Candelaria", "../src/img/avatar6.png"),
-                new User(3, "Dayna@yahoo.com", "konjo", "pass3", "About Dayna", "Dayna", "Johns", "../src/img/avatar5.png")
+                new User(3, "Dayna@yahoo.com", "konjo", "pass3", "About Dayna", "Dayna", "Kidist", "../src/img/avatar5.png")
         );
 
     }
@@ -68,7 +57,6 @@ public class UserServiceTests {
 
     @DisplayName("JUnit test for findByCredentials method")
     @Test
-
     public void givenCredentials_whenFindByEmailAndPassword_thenReturnUserObject(){
 
         given(userRepository.findByEmailAndPassword("kidu@bishaw.com", "pass1"))
@@ -82,33 +70,35 @@ public class UserServiceTests {
 
     @DisplayName("JUnit test for findByFullName method")
     @Test
-
     public void givenFullName_whenFindByFullName_thenReturnUserObject(){
 
-        given(userRepository.findByFirstNameAndLastName("Kidist", "Bishaw"))
+        given(userRepository.findByFirstNameLastName(" ", " "))
                 .willReturn(List.of(user));
 
-        List<User> userList = userService.findByFullName(user.getFirstName(), user.getLastName());
+        List<User> userList = userService.findByFullName(" ", " ");
+        System.out.println(userList);
 
-        assertThat(userList).isNotNull();
+        assertThat(userList.size()).isEqualTo(1);
     }
 
     @DisplayName("JUnit test for findByFirstOrLastName method")
     @Test
-
     public void givenFirstOrLastName_whenFindByFirstOrLastName_thenReturnUserObject(){
+        given(userRepository.findByFirstNameOrLastName("Kidist")).willReturn(List.of(user));
+        List<User> newUsers = new ArrayList<>();
 
-        given(userRepository.findByFirstNameOrLastName("Bishaw"))
-                .willReturn(List.of(user));
+        for(User user : users) {
+            userService.findByFirstOrLastName("Kidist");
+            if(user.getFirstName().equals("Kidist") || user.getLastName().equals("Kidist")) {
+                newUsers.add(user);
+            }
+        }
 
-        List<User> userList = userService.findByFirstOrLastName(user.getLastName());
-
-        assertThat(userList).isNotNull();
+        assertThat(newUsers.size()).isEqualTo(2);
     }
 
     @DisplayName("JUnit test for findAll method")
     @Test
-
     public void givenUserList_whenFindAllUsers_thenReturnUserList(){
 
         given(userRepository.findAll()).willReturn(users);
@@ -155,7 +145,6 @@ public class UserServiceTests {
 
     @DisplayName("JUnit test for updateUser method")
     @Test
-
     public void givenUserObject_whenUpdateUser_thenReturnUpdatedUser() throws ResourceNotFoundException {
 
         given(userService.save(user)).willReturn(user);
@@ -182,11 +171,7 @@ public class UserServiceTests {
         verify(userRepository, times(1)).deleteById(userId);
 
     }
-
     //Unable to test deleteUser method fully since test cases do not have posts (Null pointer exception)
-
-
-
 }
 
 
